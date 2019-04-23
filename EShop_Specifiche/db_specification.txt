@@ -1,0 +1,33 @@
+user
+ - id PK
+ - name
+ - surname
+ - username
+ - email
+ - psw_hash
+ - psw_salt
+ - registration_date
+ - registration_type ('NATIVE', 'GOOGLE', ecc.)
+ - external_id (id di google)
+
+product
+ - id PK
+ - name
+ - desc
+ - price
+ - category (enum)
+ - image_path (le immagini dei prodotti vengono salvate nel file-system (o una cdn?) )
+
+order_head
+ - idUser PK FK->user
+ - date   PK
+ - nroOrdine
+ - total_price 
+ - shipping_address
+ 
+order_row
+ - id PK
+ - idOrder FK->order_head
+ - idProduct FK->product
+ - quantity 
+ - price (singolo, non per tutta la quantità)
