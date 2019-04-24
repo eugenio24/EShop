@@ -1,0 +1,4 @@
+Per fare il deploy: 
+
+git subtree push --prefix ESHop https://github.com/eugenio24/EShop.git heroku
+
