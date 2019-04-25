@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 24, 2019 alle 17:55
+-- Creato il: Apr 25, 2019 alle 09:24
 -- Versione del server: 10.1.30-MariaDB
 -- Versione PHP: 7.2.2
 
@@ -21,8 +21,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `eshop`
 --
-CREATE DATABASE IF NOT EXISTS `eshop` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `eshop`;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `brand`
+--
+
+CREATE TABLE `brand` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -64,6 +73,7 @@ CREATE TABLE `product` (
   `descrizione` varchar(500) DEFAULT NULL,
   `price` decimal(10,0) NOT NULL,
   `category` int(11) DEFAULT NULL,
+  `brand` int(11) DEFAULT NULL,
   `image_path` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -75,7 +85,9 @@ CREATE TABLE `product` (
 
 CREATE TABLE `product_category` (
   `id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL
+  `name` varchar(30) NOT NULL,
+  `is_main` tinyint(1) NOT NULL,
+  `main_category` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,8 +102,8 @@ CREATE TABLE `user` (
   `surname` varchar(30) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
-  `psw_hash` varchar(100) NOT NULL,
-  `psw_salt` varchar(30) NOT NULL,
+  `psw_hash` varchar(100) DEFAULT NULL,
+  `psw_salt` varchar(30) DEFAULT NULL,
   `registration_date` datetime NOT NULL,
   `registration_type` enum('NATIVE','GOOGLE') NOT NULL,
   `external_id` varchar(100) DEFAULT NULL
@@ -100,6 +112,12 @@ CREATE TABLE `user` (
 --
 -- Indici per le tabelle scaricate
 --
+
+--
+-- Indici per le tabelle `brand`
+--
+ALTER TABLE `brand`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indici per le tabelle `order_head`
@@ -121,13 +139,15 @@ ALTER TABLE `order_row`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category` (`category`) USING BTREE;
+  ADD KEY `category` (`category`) USING BTREE,
+  ADD KEY `brand` (`brand`);
 
 --
 -- Indici per le tabelle `product_category`
 --
 ALTER TABLE `product_category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `main_category` (`main_category`);
 
 --
 -- Indici per le tabelle `user`
@@ -138,6 +158,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT per le tabelle scaricate
 --
+
+--
+-- AUTO_INCREMENT per la tabella `brand`
+--
+ALTER TABLE `brand`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `product_category`
@@ -172,7 +198,14 @@ ALTER TABLE `order_row`
 -- Limiti per la tabella `product`
 --
 ALTER TABLE `product`
+  ADD CONSTRAINT `brand` FOREIGN KEY (`brand`) REFERENCES `brand` (`id`),
   ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `product_category` (`id`);
+
+--
+-- Limiti per la tabella `product_category`
+--
+ALTER TABLE `product_category`
+  ADD CONSTRAINT `main_category` FOREIGN KEY (`main_category`) REFERENCES `product_category` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
