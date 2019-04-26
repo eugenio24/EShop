@@ -1,2 +1,0 @@
-# EShop
-Project E-Shop
