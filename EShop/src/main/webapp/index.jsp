@@ -17,7 +17,7 @@
         User currentUser = (User)session.getAttribute("currentUser");
         
         if(currentUser != null){
-            out.println("Utente Loggato:<br>Name: " + currentUser.getName());            
+            out.println("<p>Utente Loggato:</p><br>Name: " + currentUser.getName());            
             out.println("<br>Cognome: " + currentUser.getSurname());            
             out.println("<br>Email: " + currentUser.getEmail());            
         }
