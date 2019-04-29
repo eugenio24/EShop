@@ -2,7 +2,6 @@
 package com.main.eshop.servlets;
 
 import com.main.eshop.dao.UserDAO;
-import com.main.eshop.util.ConnectionManager;
 import com.main.eshop.util.enums.LoginResult;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -30,7 +29,8 @@ public class Login extends HttpServlet {
             resp.sendRedirect("index.jsp"); 
         }else{
             req.setAttribute("error", "invalid-login");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            
+            req.getRequestDispatcher("login.jsp").include(req, resp);
         }
     }
 }

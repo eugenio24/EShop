@@ -1,0 +1,24 @@
+
+.navbar-nav > li {
+    font-size: 20px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.banner-font{
+    color: white;
+    font-size: 30px;
+    text-shadow: 0px 2px 4px #000000;
+}
+
+.my-arrow-down{
+    padding-top: 20px;
+    color: white;
+    text-shadow: 0px 2px 4px #000000;
+}
+
+.my-arrow-down:hover{
+    color: white;
+    text-shadow: 0px 2px 4px #000000;
+    text-decoration: none;
+}
