@@ -17,6 +17,9 @@
         <link rel="stylesheet" href="css/login.css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+                       
+        <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+        <script src="js/GoogleLogin.js"></script>
     </head>
     <body>
         
@@ -74,9 +77,16 @@
                         </div>
                     <%   }   %>
 
-                    <button type="submit" class="button button-block"/>Log In</button>
+                    <button type="submit" class="btn button button-block"/>Log In</button>
+                    
+                    <div class="or-block">
+                        <span>or</span>
+                    </div>
+                                    
+                    <button type="button" onclick="btnGoogle_onClick();" class="btn btn-danger btn-block button-block"><i class="fab fa-google"></i>   Sign in with <b>Google</b></button>                    
                 </form>
-          </div>
+                                
+            </div>
                     
           <div id="signup">   
                 <h1>Sign Up for Free</h1>
@@ -112,7 +122,13 @@
                     </div>
 
                     <button type="submit" class="button button-block"/>Get Started</button>
-
+                    
+                    <div class="or-block">
+                        <span>or</span>
+                    </div>
+                                    
+                    <button type="button" onclick="btnGoogle_onClick();" class="btn btn-danger btn-block button-block"><i class="fab fa-google"></i>   Sign in with <b>Google</b></button>                    
+               
                 </form>
             </div>
         </div>
