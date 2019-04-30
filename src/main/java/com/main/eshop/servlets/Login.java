@@ -28,8 +28,7 @@ public class Login extends HttpServlet {
             session.setAttribute("currentUser", UserDAO.getNativeUserFromUsername(username)); 
             resp.sendRedirect("index.jsp"); 
         }else{
-            req.setAttribute("error", "invalid-login");
-            
+            req.setAttribute("error", "invalid-login");            
             req.getRequestDispatcher("login.jsp").include(req, resp);
         }
     }

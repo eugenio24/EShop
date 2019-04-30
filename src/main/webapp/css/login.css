@@ -144,12 +144,9 @@ textarea {
 .button {
   border: 0;
   outline: none;
-  border-radius: 0;
-  padding: 15px 0;
   font-size: 2rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: .1em;
   background: #1ab188;
   color: #ffffff;
   transition: all 0.5s ease;
@@ -157,14 +154,48 @@ textarea {
 }
 .button:hover, .button:focus {
   background: #179b77;
+  color: white;
 }
 
 .button-block {
   display: block;
+  padding: 15px 0;
+  font-size: 2rem;
   width: 100%;
 }
 
-.forgot {
-  margin-top: -20px;
-  text-align: right;
+.or-block {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.or-block > span {
+    position: relative;
+    display: inline-block;
+    color: white;
+}
+
+.or-block > span:before,
+.or-block > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: white;
+}
+
+.or-block > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.or-block > span:after {
+    left: 100%;
+    margin-left: 15px;
 }

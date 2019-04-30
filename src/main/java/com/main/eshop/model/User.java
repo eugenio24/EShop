@@ -2,6 +2,7 @@
 package com.main.eshop.model;
 
 import com.main.eshop.util.enums.RegistrationType;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ public class User {
     private String name;
     private String surname;
     private RegistrationType registrationType;
-    private Date registrationDate;
+    private Timestamp registrationDate;
     
     // opzionali in base alla registrazione;
     private String username = null;
@@ -28,7 +29,7 @@ public class User {
      * @param identificator Username or externalId (depends on registration type)
      * @param registrationType Registration Type
      */
-    public User(String email, String name, String surname, Date registrationDate, String identificator, RegistrationType registrationType) {
+    public User(String email, String name, String surname, Timestamp registrationDate, String identificator, RegistrationType registrationType) {
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -76,11 +77,11 @@ public class User {
         this.registrationType = registrationType;
     }
 
-    public Date getRegistrationDate() {
+    public Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
 
