@@ -20,6 +20,9 @@
                        
         <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
         <script src="js/GoogleLogin.js"></script>
+        
+        <script src="js/registration.js"></script>
+        
     </head>
     <body>
         
@@ -91,34 +94,35 @@
           <div id="signup">   
                 <h1>Sign Up for Free</h1>
 
-                <form action="/" method="POST">
+                <form action="Registration" method="POST" onsubmit="return validateForm();">
                     <div class="top-row">
                         <div class="field-wrap">
-                            <label>
-                              First Name<span class="req">*</span>
-                            </label>
-                            <input type="text" required autocomplete="off" />
+                            <input type="text" placeholder="Name" name="name" id="name" required autocomplete="off" />
+                            <span class="registrationError" id="nameError"></span>
                         </div>
                         <div class="field-wrap">
-                            <label>
-                              Last Name<span class="req">*</span>
-                            </label>
-                            <input type="text"required autocomplete="off"/>
+                            <input type="text" placeholder="Surname" name="surname" id="surname" required autocomplete="off"/>
+                            <span class="registrationError" id="surnameError"></span>
                         </div>
                     </div>
-
+                    
                     <div class="field-wrap">
-                      <label>
-                        Email Address<span class="req">*</span>
-                      </label>
-                      <input type="email"required autocomplete="off"/>
+                        <input type="text" placeholder="Username" name="username" id="username" required autocomplete="off"/>
+                        <span class="registrationError" id="usernameError"></span>
                     </div>
 
                     <div class="field-wrap">
-                      <label>
-                        Set A Password<span class="req">*</span>
-                      </label>
-                      <input type="password"required autocomplete="off"/>
+                        <input type="email" placeholder="Email Address" name="email" id="email" required autocomplete="off"/>
+                    </div>
+
+                    <div class="top-row">
+                        <div class="field-wrap">
+                            <input type="password" placeholder="Password" name="psw" id="psw" required autocomplete="off" />
+                            <span class="registrationError" id="passwordError"></span>
+                        </div>
+                        <div class="field-wrap">
+                            <input type="password" placeholder="Confirm Password" name="cPsw" id="cPsw" required autocomplete="off"/>
+                        </div>
                     </div>
 
                     <button type="submit" class="button button-block"/>Get Started</button>

@@ -8,6 +8,10 @@
         <servlet-name>GoogleLogin</servlet-name>
         <servlet-class>com.main.eshop.servlets.GoogleLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Registration</servlet-name>
+        <servlet-class>com.main.eshop.servlets.Registration</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>GoogleLogin</servlet-name>
         <url-pattern>/GoogleLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Registration</servlet-name>
+        <url-pattern>/Registration</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

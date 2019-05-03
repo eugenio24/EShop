@@ -125,4 +125,57 @@ public class UserDAO {
             return false;
         }
     }
+    
+   /**
+    * Metodo che aggiunge un utente nativo
+    * @param user Dati dell utente
+    * @param salt salt della psw
+    * @param psw hash della psw + salt
+    * @return risultato dell inserimento
+    */
+    public static boolean insertNativeUser(User user,String salt,String psw){
+        String sqlQuery = "INSERT INTO `user`(`id`, `name`, `surname`, `username`, `email`, `psw_hash`, `psw_salt`, `registration_date`, `registration_type`)"
+                + " VALUES (NULL,?,?,?,?,?,?,?,'NATIVE')";
+        
+        try {
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getSurname());
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, psw);
+            stmt.setString(6, salt);
+            stmt.setTimestamp(7, user.getRegistrationDate());
+            
+            stmt.executeUpdate();
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    /**
+     * Metodo che controlla l' esistenza di un username
+     * @param username username da controllare
+     * @return il risultato del controllo
+     */
+    public static boolean checkUserFromUsername(String username){
+        String sqlQuery = "SELECT * FROM user WHERE username=?";        
+        
+        try {
+            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            stmt.setString(1, username);
+            
+            ResultSet result = stmt.executeQuery();
+            
+            if(result.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
