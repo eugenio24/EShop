@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import com.main.eshop.model.User;
 import com.main.eshop.util.enums.RegistrationType;
 import java.sql.Timestamp;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,12 +35,14 @@ public class Registration extends HttpServlet {
             
             User user = new User(email, name, surname, new Timestamp(System.currentTimeMillis()), username, RegistrationType.NATIVE);
             
-            if(!UserDAO.insertNativeUser(user,salt,psw)){
-                //Errore
+            if(UserDAO.insertNativeUser(user,salt,psw)){
+                HttpSession session = req.getSession();       
+                session.setAttribute("currentUser", UserDAO.getNativeUserFromUsername(username)); 
+                resp.sendRedirect("index.jsp");
             }    
         }else{
             req.setAttribute("usernameError", "Username already exist");
-        }  
-        req.getRequestDispatcher("login.jsp").forward(req,resp);
+        }
+          
     } 
 }
