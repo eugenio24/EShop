@@ -9,6 +9,7 @@ user
  - registration_date
  - registration_type enum('NATIVE', 'GOOGLE', ecc.)
  - external_id (id di google)
+ - is_admin
 
 product
  - id PK
