@@ -15,6 +15,7 @@ public class User {
     private String surname;
     private RegistrationType registrationType;
     private Timestamp registrationDate;
+    private boolean isAdmin;
     
     // opzionali in base alla registrazione;
     private String username = null;
@@ -28,13 +29,15 @@ public class User {
      * @param registrationDate Registration Date 
      * @param identificator Username or externalId (depends on registration type)
      * @param registrationType Registration Type
+     * @param isAdmin is admin user
      */
-    public User(String email, String name, String surname, Timestamp registrationDate, String identificator, RegistrationType registrationType) {
+    public User(String email, String name, String surname, Timestamp registrationDate, String identificator, RegistrationType registrationType, boolean isAdmin) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.registrationType = registrationType;
         this.registrationDate = registrationDate;
+        this.isAdmin = isAdmin;
         
         if(registrationType == RegistrationType.NATIVE)
             this.username = identificator;
@@ -101,8 +104,22 @@ public class User {
         this.externalId = externalId;
     }
 
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    
+    /**
+     * ToString
+     * @return 
+     */
     @Override
     public String toString() {
-        return "User{" + "email=" + email + ", name=" + name + ", surname=" + surname + ", registrationType=" + registrationType + ", registrationDate=" + registrationDate + ", username=" + username + ", externalId=" + externalId + '}';
-    }        
+        return "User{" + "email=" + email + ", name=" + name + ", surname=" + surname + ", registrationType=" + registrationType + ", registrationDate=" + registrationDate + ", isAdmin=" + isAdmin + ", username=" + username + ", externalId=" + externalId + '}';
+    }
+    
 }
