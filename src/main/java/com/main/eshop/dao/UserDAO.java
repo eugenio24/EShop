@@ -3,8 +3,10 @@ package com.main.eshop.dao;
 
 import com.main.eshop.model.User;
 import com.main.eshop.util.ConnectionManager;
+import com.main.eshop.util.DBUtils;
 import com.main.eshop.util.enums.LoginResult;
 import com.main.eshop.util.enums.RegistrationType;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,25 +29,36 @@ public class UserDAO {
     public static LoginResult authenticateNativeUser(String username, String pswToCheck){
         String sqlQuery = "SELECT psw_hash, psw_salt FROM user WHERE username=?";        
         
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        LoginResult result = LoginResult.INVALID;
+        
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, username);
             
-            ResultSet result = stmt.executeQuery();                        
+            resultSet = stmt.executeQuery();                        
             
-            if(result.next()){
-                String storedHash = result.getString("psw_hash");
-                String storedSalt = result.getString("psw_salt");
+            if(resultSet.next()){
+                String storedHash = resultSet.getString("psw_hash");
+                String storedSalt = resultSet.getString("psw_salt");
                 
                 String hashToCheck = BCrypt.hashpw(pswToCheck, storedSalt);
                 
-                return hashToCheck.equals(storedHash) ? LoginResult.VALID : LoginResult.INVALID;
+                result = hashToCheck.equals(storedHash) ? LoginResult.VALID : LoginResult.INVALID;
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);            
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
         }
         
-        return LoginResult.INVALID;
+        return result;
     }
         
     /**
@@ -57,18 +70,29 @@ public class UserDAO {
         String sql = "SELECT * FROM user WHERE ";
         sql += user.getRegistrationType() == RegistrationType.NATIVE ? "username=?" : "external_id=?";
         
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        boolean result = false;
+        
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sql);
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sql);
             stmt.setString(1, user.getRegistrationType() == RegistrationType.NATIVE ? user.getUsername() : user.getExternalId());
             
-            ResultSet result = stmt.executeQuery();
+            resultSet = stmt.executeQuery();
             
-            return result.next();
+            result = resultSet.next();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        } finally{
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }       
         
-        return false;
+        return result;
     }
     
     /**
@@ -79,25 +103,36 @@ public class UserDAO {
     public static User getNativeUserFromUsername(String username){
         String sqlQuery = "SELECT * FROM user WHERE username=?";        
         
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        User result = null;
+        
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, username);
             
-            ResultSet result = stmt.executeQuery();
+            resultSet = stmt.executeQuery();
             
-            if(result.next()){
-                return new User(result.getString("email"), 
-                                result.getString("name"), 
-                                result.getString("surname"), 
-                                result.getTimestamp("registration_date"), 
-                                result.getString("username"), 
+            if(resultSet.next()){
+                result = new User(resultSet.getString("email"), 
+                                resultSet.getString("name"), 
+                                resultSet.getString("surname"), 
+                                resultSet.getTimestamp("registration_date"), 
+                                resultSet.getString("username"), 
                                 RegistrationType.NATIVE);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
         }
         
-        return null;
+        return result;
     }
     
     /**
@@ -109,8 +144,14 @@ public class UserDAO {
         String sqlQuery = "INSERT INTO `user` (`id`, `name`, `surname`, `email`, `registration_date`, `registration_type`, `external_id`) "
                         + "VALUES (NULL, ?, ?, ?, ?, 'GOOGLE', ?)";
         
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        
+        boolean result = false;
+        
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            connection = ConnectionManager.getConnection(); 
+            stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getSurname());
             stmt.setString(3, user.getEmail());
@@ -119,11 +160,15 @@ public class UserDAO {
             
             stmt.executeUpdate();
             
-            return true;
+            result = true;
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);           
+        } finally{
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
         }
+        
+        return result;
     }
     
    /**
@@ -137,8 +182,14 @@ public class UserDAO {
         String sqlQuery = "INSERT INTO `user`(`id`, `name`, `surname`, `username`, `email`, `psw_hash`, `psw_salt`, `registration_date`, `registration_type`)"
                 + " VALUES (NULL,?,?,?,?,?,?,?,'NATIVE')";
         
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        
+        boolean result = false;
+        
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getSurname());
             stmt.setString(3, user.getUsername());
@@ -149,11 +200,15 @@ public class UserDAO {
             
             stmt.executeUpdate();
             
-            return true;
+            result = true;
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);            
+        }finally{
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
         }
+        
+        return result;
     }
     
     /**
@@ -162,20 +217,30 @@ public class UserDAO {
      * @return il risultato del controllo
      */
     public static boolean checkUserFromUsername(String username){
-        String sqlQuery = "SELECT * FROM user WHERE username=?";        
+        String sqlQuery = "SELECT * FROM user WHERE username=?";      
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        boolean result = false;
         
         try {
-            PreparedStatement stmt = ConnectionManager.getConnection().prepareStatement(sqlQuery);
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
             stmt.setString(1, username);
             
-            ResultSet result = stmt.executeQuery();
+            resultSet = stmt.executeQuery();
             
-            if(result.next()){
-                return true;
-            }
+            result = resultSet.next();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
         }
-        return false;
+        
+        return result;
     }
 }
