@@ -24,7 +24,7 @@ function validateForm(){
     
     if(username.match(/^[0-9a-zA-Z]+$/)){
         if(username.length < 8){
-            document.getElementById("usernameError").innerHTML = "*Username is not 8 charachter long";
+            document.getElementById("usernameError").innerHTML = "*Username is not 8 charachters long";
             isValid = false;
         }else{
             document.getElementById("usernameError").innerHTML = "";
@@ -36,12 +36,12 @@ function validateForm(){
     
     if(password.length < 8){
         isValid = false;
-        document.getElementById("passwordError").innerHTML = "*The password is not 8 charachter long";
+        document.getElementById("passwordError").innerHTML = "*The password is not 8 charachters long";
     }else{
         console.log("ciao come va");
         if(password != cPassword){
             isValid = false;
-            document.getElementById("passwordError").innerHTML = "*The passwords is not coincide";
+            document.getElementById("passwordError").innerHTML = "*Passwords dosn't match";
         }else{
             document.getElementById("passwordError").innerHTML = "";
         }
