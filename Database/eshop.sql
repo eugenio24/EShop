@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 25, 2019 alle 09:24
--- Versione del server: 10.1.30-MariaDB
--- Versione PHP: 7.2.2
+-- Creato il: Mag 07, 2019 alle 09:14
+-- Versione del server: 10.1.37-MariaDB
+-- Versione PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -106,7 +106,8 @@ CREATE TABLE `user` (
   `psw_salt` varchar(30) DEFAULT NULL,
   `registration_date` datetime NOT NULL,
   `registration_type` enum('NATIVE','GOOGLE') NOT NULL,
-  `external_id` varchar(100) DEFAULT NULL
+  `external_id` varchar(100) DEFAULT NULL,
+  `is_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
