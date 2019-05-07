@@ -92,7 +92,72 @@
     </div>
     
     <div id="products" style="height: 800px;">
-        Lista dei prodotti
+        
+        <div align="right" class="categories">
+            <h3 class="categoriesTitle"><b>Categorie</b></h3>
+        </div>
+        
+        <div class="productList">
+            <table>
+                
+                <tr>
+                    
+                    <td>
+                        <div class="product">
+                            <img src="images/sci1.jpg" alt="Denim Jeans" class="productImage">
+                            <h1>Tailored Jeans</h1>
+                            <p class="price">$1999.99</p>
+                            <p>Some text about the sci..</p>
+                            <p><button>Add to Cart</button></p>
+                        </div>   
+                    </td>
+                    <td>
+                        <div class="product">
+                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
+                            <h1>Tailored Jeans</h1>
+                            <p class="price">$19.99</p>
+                            <p>Some text about the ..</p>
+                            <p><button>Add to Cart</button></p>
+                        </div> 
+                    </td>
+                    <td>
+                        <div class="product">
+                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
+                            <h1>Tailored Jeans</h1>
+                            <p class="price">$19.99</p>
+                            <p>Some text about the jeans..</p>
+                            <p><button>Add to Cart</button></p>
+                        </div> 
+                    </td>
+                    <td>
+                        <div class="product">
+                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
+                            <h1>Tailored Jeans</h1>
+                            <p class="price">$19.99</p>
+                            <p>Some text about the jeans..</p>
+                            <p><button>Add to Cart</button></p>
+                        </div> 
+                    </td>
+                    <td>
+                        <div class="product">
+                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
+                            <h1>Tailored Jeans</h1>
+                            <p class="price">$19.99</p>
+                            <p>Some text about the jeans..</p>
+                            <p><button>Add to Cart</button></p>
+                        </div>
+                    </td>
+                    
+                    
+                </tr>
+                
+            </table>
+            
+            
+        </div>
+        
+        
+        
     </div>
     
     
