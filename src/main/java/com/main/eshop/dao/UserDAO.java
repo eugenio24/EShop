@@ -133,7 +133,7 @@ public class UserDAO {
     * @param psw hash della psw + salt
     * @return risultato dell inserimento
     */
-    public static boolean insertNativeUser(User user,String salt,String psw){
+    public static boolean insertNativeUser(User user, String salt, String psw){
         String sqlQuery = "INSERT INTO `user`(`id`, `name`, `surname`, `username`, `email`, `psw_hash`, `psw_salt`, `registration_date`, `registration_type`)"
                 + " VALUES (NULL,?,?,?,?,?,?,?,'NATIVE')";
         

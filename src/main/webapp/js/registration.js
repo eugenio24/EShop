@@ -1,12 +1,13 @@
+
 function validateForm(){
     
-    var isValid = true;
+    let isValid = true;
     
-    var name = document.getElementById("name").value;
-    var surname = document.getElementById("surname").value;
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("psw").value;
-    var cPassword = document.getElementById("cPsw").value;
+    let name = document.getElementById("name").value;
+    let surname = document.getElementById("surname").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("psw").value;
+    let cPassword = document.getElementById("cPsw").value;
     
     if(name.match(/\d+/g)){
         document.getElementById("nameError").innerHTML = "*Name contains numbers";
@@ -37,11 +38,10 @@ function validateForm(){
     if(password.length < 8){
         isValid = false;
         document.getElementById("passwordError").innerHTML = "*The password is not 8 charachters long";
-    }else{
-        console.log("ciao come va");
+    }else{        
         if(password != cPassword){
             isValid = false;
-            document.getElementById("passwordError").innerHTML = "*Passwords dosn't match";
+            document.getElementById("passwordError").innerHTML = "*Passwords doesn't match";
         }else{
             document.getElementById("passwordError").innerHTML = "";
         }
