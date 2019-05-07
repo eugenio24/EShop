@@ -23,7 +23,7 @@ public class Registration extends HttpServlet {
         
         String username = req.getParameter("username");
         
-        if(UserDAO.checkUserFromUsername(username) == false){
+        if(!UserDAO.checkUserFromUsername(username)){
             String name = req.getParameter("name");
             name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
             String surname =req.getParameter("surname");
@@ -35,9 +35,9 @@ public class Registration extends HttpServlet {
             
             User user = new User(email, name, surname, new Timestamp(System.currentTimeMillis()), username, RegistrationType.NATIVE);
             
-            if(UserDAO.insertNativeUser(user,salt,psw)){
+            if(UserDAO.insertNativeUser(user, salt, psw)){
                 HttpSession session = req.getSession();       
-                session.setAttribute("currentUser", UserDAO.getNativeUserFromUsername(username)); 
+                session.setAttribute("currentUser", user); 
                 resp.sendRedirect("index.jsp");
             }    
         }else{
