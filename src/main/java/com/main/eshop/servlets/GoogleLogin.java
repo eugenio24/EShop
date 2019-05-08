@@ -11,7 +11,6 @@ import com.main.eshop.model.User;
 import com.main.eshop.util.enums.RegistrationType;
 import java.io.IOException;
 import java.sql.Timestamp;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +63,7 @@ public class GoogleLogin extends HttpServlet {
         String familyName = (String) payload.get("family_name");
         String givenName = (String) payload.get("given_name");
         
-        User user = new User(email, givenName, familyName, new Timestamp(System.currentTimeMillis()), userId, RegistrationType.GOOGLE);
+        User user = new User(email, givenName, familyName, new Timestamp(System.currentTimeMillis()), userId, RegistrationType.GOOGLE, false);
         
         if(UserDAO.userExist(user)){
             HttpSession session = request.getSession();

@@ -3,7 +3,6 @@ package com.main.eshop.model;
 
 import com.main.eshop.util.enums.RegistrationType;
 import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  *
