@@ -33,7 +33,7 @@ public class Registration extends HttpServlet {
             String salt = BCrypt.gensalt();
             String psw = BCrypt.hashpw(req.getParameter("psw"), salt);
             
-            User user = new User(email, name, surname, new Timestamp(System.currentTimeMillis()), username, RegistrationType.NATIVE);
+            User user = new User(email, name, surname, new Timestamp(System.currentTimeMillis()), username, RegistrationType.NATIVE, false);
             
             if(UserDAO.insertNativeUser(user, salt, psw)){
                 HttpSession session = req.getSession();       
