@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">        
         <link rel="stylesheet" href="css/my-style.css" />
+        <link rel="stylesheet" href="css/ui.css" />
+        
+        <jsp:include page="/LoadProducts"/>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         
@@ -93,72 +96,17 @@
     
     <div id="products" style="height: 800px;">
         
-        <div align="right" class="categories">
-            <h3 class="categoriesTitle"><b>Categorie</b></h3>
+        <div class="padding-y-sm prova">
+            <span>3897 results for "Item"</span>	
         </div>
         
-        <div class="productList">
-            <table>
-                
-                <tr>
-                    
-                    <td>
-                        <div class="product">
-                            <img src="images/sci1.jpg" alt="Denim Jeans" class="productImage">
-                            <h1>Tailored Jeans</h1>
-                            <p class="price">$1999.99</p>
-                            <p>Some text about the sci..</p>
-                            <p><button>Add to Cart</button></p>
-                        </div>   
-                    </td>
-                    <td>
-                        <div class="product">
-                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
-                            <h1>Tailored Jeans</h1>
-                            <p class="price">$19.99</p>
-                            <p>Some text about the ..</p>
-                            <p><button>Add to Cart</button></p>
-                        </div> 
-                    </td>
-                    <td>
-                        <div class="product">
-                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
-                            <h1>Tailored Jeans</h1>
-                            <p class="price">$19.99</p>
-                            <p>Some text about the jeans..</p>
-                            <p><button>Add to Cart</button></p>
-                        </div> 
-                    </td>
-                    <td>
-                        <div class="product">
-                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
-                            <h1>Tailored Jeans</h1>
-                            <p class="price">$19.99</p>
-                            <p>Some text about the jeans..</p>
-                            <p><button>Add to Cart</button></p>
-                        </div> 
-                    </td>
-                    <td>
-                        <div class="product">
-                            <img src="images/banner1.jpg" alt="Denim Jeans" style="width:100%">
-                            <h1>Tailored Jeans</h1>
-                            <p class="price">$19.99</p>
-                            <p>Some text about the jeans..</p>
-                            <p><button>Add to Cart</button></p>
-                        </div>
-                    </td>
-                    
-                    
-                </tr>
-                
-            </table>
-            
+        <div class="row prova" id="products">          
+
+            ${prodotti}
             
         </div>
-        
-        
-        
     </div>
+
     
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
