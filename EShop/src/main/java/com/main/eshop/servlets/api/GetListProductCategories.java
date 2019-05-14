@@ -27,7 +27,9 @@ public class GetListProductCategories extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<ProductCategory> temp = ProductCategoryDAO.getListCategories();
+        ArrayList<ProductCategory> list = ProductCategoryDAO.getListCategories();
+        
+        request.setAttribute("categories", list);
     }
 
 }

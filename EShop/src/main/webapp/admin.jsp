@@ -56,54 +56,118 @@
     </nav>
     
     <section>        
+        <br>
         <div class="container">
-            <h2>Inserimento Prodotti</h2>
-            <form method="POST" action="">
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="productName">Nome Prodotto</label>
-                    <div class="col-sm-10">
-                        <input type="text" name="name" class="form-control" id="productName" placeholder="Nome Prodotto">
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Inserimento Prodotti</h2>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="productDesc">Descrizione</label>
-                    <div class="col-sm-10">
-                        <textarea type="text" name="desc" class="form-control" id="productDesc" placeholder="Descrizione Prodotto" rows="4"></textarea>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="priceName">Prezzo Prodotto</label>
-                    <div class="input-group col-sm-10">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">€</span>
+                <div class="card-body">            
+                    <form method="POST" action="">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="productName">Nome Prodotto</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="productName" placeholder="Nome Prodotto">
+                            </div>
                         </div>
-                        <input step="0.1" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" />
-                    </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="productDesc">Descrizione</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" name="desc" class="form-control" id="productDesc" placeholder="Descrizione Prodotto" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="priceName">Prezzo Prodotto</label>
+                            <div class="input-group col-sm-10">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">€</span>
+                                </div>
+                                <input step="0.1" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="productCat">Categoria Prodotto</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="productCat">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="productBrand">Marca Prodotto</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="productBrand">
+
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Prodotto</button>
+                    </form>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="productCat">Categoria Prodotto</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="productCat">
-                            
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" for="productBrand">Marca Prodotto</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="productBrand">
-                            
-                        </select>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
+        <br> 
         <div class="container">
-            <h2>Inserimento Categorie Prodotti</h2>
+            <div class="card">
+                <div class="card-header">
+                    <h2>Inserimento Categorie Prodotti</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="categoryName">Nome Categoria</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="categoryName" placeholder="Nome Categoria">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="categoryMain">Categoria Principale</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="categoryMain">
+                                    <option value="isMain">Seleziona categoria principale se necessario</option>
+                                    <c:forEach items="${categories}" var="item">
+                                        <option>
+                                            <c:out value="${item.name}" />
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Categoria</button>
+                    </form>
+                </div>
+            </div>
         </div>
+        <br>
         <div class="container">
-            <h2>Inserimento Marche</h2>
-        </div>        
+            <div class="card">
+                <div class="card-header">
+                    <h2>Inserimento Marche</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="InsertBrand">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="brandName">Nome Marca</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="brandName" placeholder="Nome Marca" required>
+                            </div>
+                        </div>                    
+                        <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Marca</button>
+                        <%  if(request.getAttribute("errorBrand") != null){  %>                            
+                            <div class="alert alert-danger mt-3" role="alert">
+                                    ${errorBrand}
+                            </div>                            
+                        <%   }
+                            if(request.getAttribute("successBrand") != null){  %>                            
+                            <div class="alert alert-success mt-3" role="alert">
+                                Marca inserita correttamente
+                            </div>                            
+                        <%   }   %>
+                    </form>
+                </div>
+            </div>
+        </div>     
+        <br>      
     </section>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
