@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+    <servlet>
+        <servlet-name>LoadProducts</servlet-name>
+        <servlet-class>com.main.eshop.servlets.LoadProducts</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.main.eshop.servlets.Login</servlet-class>
@@ -12,10 +17,10 @@
         <servlet-name>Registration</servlet-name>
         <servlet-class>com.main.eshop.servlets.Registration</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>InsertBrand</servlet-name>
-        <servlet-class>com.main.eshop.servlets.InsertBrand</servlet-class>
-    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoadProducts</servlet-name>
+        <url-pattern>/LoadProducts</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -27,10 +32,6 @@
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
         <url-pattern>/Registration</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>InsertBrand</servlet-name>
-        <url-pattern>/InsertBrand</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
