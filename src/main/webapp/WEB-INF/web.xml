@@ -16,6 +16,10 @@
         <servlet-name>InsertBrand</servlet-name>
         <servlet-class>com.main.eshop.servlets.InsertBrand</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetListProductCategories</servlet-name>
+        <servlet-class>com.main.eshop.servlets.api.GetListProductCategories</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>InsertBrand</servlet-name>
         <url-pattern>/InsertBrand</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListProductCategories</servlet-name>
+        <url-pattern>/api/GetListProductCategories</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
