@@ -7,32 +7,47 @@ package com.main.eshop.model;
  */
 public class ProductCategory {
     
+    private int id;  // is 0 if is a new category to add
     private String name;
     private boolean isMainCategory;
     
-    private ProductCategory mainCategory = null;
-    
+    private int mainCategoryId = 0;
+
     /**
-     * Constructor, per categorie con categoria principale    
-     * @param name Name     
-     * @param mainCategory MainCategory
+     * Constructor dor main category
+     * @param id ID
+     * @param name Name
      */
-    public ProductCategory(String name, ProductCategory mainCategory){
+    public ProductCategory(int id, String name){
+        this.id = id;
         this.name = name;
+        
         this.isMainCategory = true;
-        this.mainCategory = mainCategory;
-    }
-    
+    }   
+        
     /**
-     * Constructor, per categorie principali
-     * @param name Name 
+     * Constructor
+     * @param id ID 
+     * @param name Name
+     * @param mainCategoryId Categoria principale
      */
-    public ProductCategory(String name){
+    public ProductCategory(int id, String name, int mainCategoryId){
+        this.id = id;
         this.name = name;
-        this.isMainCategory = true;
-    }
+        this.mainCategoryId = mainCategoryId;
+        
+        this.isMainCategory = mainCategoryId == 0;
+    }        
     
     // GETTER SETTER
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -50,12 +65,11 @@ public class ProductCategory {
         this.isMainCategory = isMainCategory;
     }
 
-    public ProductCategory getMainCategory() {
-        return mainCategory;
+    public int getMainCategoryId() {
+        return mainCategoryId;
     }
 
-    public void setMainCategory(ProductCategory mainCategory) {
-        this.mainCategory = mainCategory;
-    }
-    
+    public void setMainCategoryId(int mainCategoryId) {
+        this.mainCategoryId = mainCategoryId;
+    }        
 }

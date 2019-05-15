@@ -28,6 +28,10 @@
         <servlet-name>InsertBrand</servlet-name>
         <servlet-class>com.main.eshop.servlets.InsertBrand</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InsertProductCategory</servlet-name>
+        <servlet-class>com.main.eshop.servlets.InsertProductCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
         <url-pattern>/LoadProducts</url-pattern>
@@ -56,9 +60,11 @@
         <servlet-name>InsertBrand</servlet-name>
         <url-pattern>/InsertBrand</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertProductCategory</servlet-name>
+        <url-pattern>/InsertProductCategory</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 </web-app>
