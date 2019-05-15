@@ -72,8 +72,22 @@
   opacity: 0.7;
 }
 
-.prova{
-    margin-right: 15px;
-    margin-left: 15px;
+.btn.btn-default {
+    float: right;
+    color: #000000;
+    background-color: #ffffff;
+    background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+    border-color: #CCCCCC #CCCCCC #CCCCCC;
+}
+.btn.btn-default:hover {
+    color: #000000;
+    background-color: #4CAF50;
+    background-image: linear-gradient(to bottom, #FFBF0B, #FFBF0B);
+    border-color: #CCCCCC #CCCCCC #CCCCCC;
+}
+
+.margine{
+    margin-left: 0px;
+    margin-right: 0px;
 }
 

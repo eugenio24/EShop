@@ -1,5 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -12,6 +15,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">        
         <link rel="stylesheet" href="css/my-style.css" />
         <link rel="stylesheet" href="css/ui.css" />
+        
         
         <jsp:include page="/LoadProducts"/>
         
@@ -97,12 +101,28 @@
     <div id="products" style="height: 800px;">
         
         <div class="padding-y-sm prova">
-            <span>3897 results for "Item"</span>	
+            <span style="padding: 35px;">${fn:length(prodotti)} prodotti disponibili</span>	
         </div>
         
-        <div class="row prova" id="products">          
+        <div class="row margine" id="products">          
 
-            ${prodotti}
+            <c:forEach items="${prodotti}" var="prodotto">
+                <div class="col-md-3 col-sm-6" style="padding-right: 0px; box-sizing: content-box;">
+                    <form name="${prodotto.id}" id="${prodotto.id}" method="post">
+                        <figure class="card card-product">
+                             <div class="img-wrap"> <img src="${prodotto.urlImmagine}"></div>
+                               <figcaption class="info-wrap">
+                                     <a href="#" class="title">${prodotto.name}</a>
+                                       <div class="price-wrap">
+                                            <span class="price-new">${prodotto.prezzo} €</span>
+                                            <button type="submit" class="btn btn-default ">Aggiungi al Carrello</button>
+                                        </div>
+                                </figcaption>
+                        </figure>
+                    </form>
+                </div>
+                
+            </c:forEach>   
             
         </div>
     </div>

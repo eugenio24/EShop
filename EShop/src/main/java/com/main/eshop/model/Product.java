@@ -15,13 +15,17 @@ public class Product {
     private String name;
     private String descrizione;
     private double prezzo;
+    private String categoria;
+    private String brand;
     private String urlImmagine;
 
-    public Product(int id, String name, String descrizione, double prezzo, String urlImmagine) {
+    public Product(int id, String name, String descrizione, double prezzo, String categoria, String brand, String urlImmagine) {
         this.id = id;
         this.name = name;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
+        this.categoria = categoria;
+        this.brand = brand;
         this.urlImmagine = urlImmagine;
     }
 
@@ -57,6 +61,22 @@ public class Product {
         this.prezzo = prezzo;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     public String getUrlImmagine() {
         return urlImmagine;
     }
@@ -65,10 +85,7 @@ public class Product {
         this.urlImmagine = urlImmagine;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + "id=" + id + ", name=" + name + ", descrizione=" + descrizione + ", prezzo=" + prezzo + ", urlImmagine=" + urlImmagine + '}';
-    }
+    
     
     
     
