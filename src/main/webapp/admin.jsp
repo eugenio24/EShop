@@ -9,6 +9,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="/api/GetListProductCategories" />
 
@@ -113,7 +114,7 @@
                     <h2>Inserimento Categorie Prodotti</h2>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="InsertProductCategory">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="categoryName">Nome Categoria</label>
                             <div class="col-sm-10">
@@ -123,11 +124,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="categoryMain">Categoria Principale</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="categoryMain">
+                                <select class="form-control" name="category" id="categoryMain">
                                     <option value="isMain">Seleziona categoria principale se necessario</option>
-                                    <c:forEach items="${categories}" var="item">
-                                        <option>
-                                            <c:out value="${item.name}" />
+                                    <c:forEach items="${categories}" var="elem">
+                                        <option value="${item.id}">
+                                            ${elem.name}
                                         </option>
                                     </c:forEach>
                                 </select>

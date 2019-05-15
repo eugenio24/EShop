@@ -40,7 +40,7 @@ public class BrandDAO {
 
             result = resultSet.next();
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBUtils.close(resultSet);
             DBUtils.close(stmt);
@@ -72,7 +72,7 @@ public class BrandDAO {
             
             result = true;
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             DBUtils.close(stmt);
             DBUtils.close(connection);
