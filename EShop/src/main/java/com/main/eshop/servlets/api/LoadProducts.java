@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.main.eshop.servlets;
+package com.main.eshop.servlets.api;
 
 import com.main.eshop.dao.ProductDAO;
+import com.main.eshop.model.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletContext;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,19 +22,8 @@ public class LoadProducts extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        ArrayList<Product> list = ProductDAO.getAllProducts();
+        req.setAttribute("prodotti", list);
     }
-
-    
-    
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Ciao come va *************************************************************");
-        req.setAttribute("prodotti", ProductDAO.getAllProducts());
-    }
-
-    
-    
-    
 
 }
