@@ -22,7 +22,9 @@ public class ProductDAO {
      * @return ArrayList of Products
      */
     public static ArrayList<Product> getAllProducts(){
-        String sqlQuery = "SELECT product.id, product.name, product.descrizione, product.price, product.image_path, product_category.name as categoria, brand.name as brand FROM product_category,product,brand WHERE product.category = product_category.id AND product.brand = brand.id";
+        String sqlQuery = "SELECT product.id, product.name, product.descrizione, product.price, product.image_path, product_category.name as categoria, brand.name as brand "
+                        + "FROM product_category,product,brand "
+                        + "WHERE product.category = product_category.id AND product.brand = brand.id";
         
         Connection connection = null;
         PreparedStatement stmt = null;
