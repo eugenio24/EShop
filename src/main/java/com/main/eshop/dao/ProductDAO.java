@@ -1,6 +1,8 @@
 package com.main.eshop.dao;
 
+import com.main.eshop.model.Brand;
 import com.main.eshop.model.Product;
+import com.main.eshop.model.ProductCategory;
 import com.main.eshop.util.ConnectionManager;
 import com.main.eshop.util.DBUtils;
 import java.sql.Connection;
@@ -22,8 +24,8 @@ public class ProductDAO {
      * @return ArrayList of Products
      */
     public static ArrayList<Product> getAllProducts(){
-        String sqlQuery = "SELECT product.id, product.name, product.descrizione, product.price, product.image_path, product_category.name as categoria, brand.name as brand "
-                        + "FROM product_category,product,brand "
+        String sqlQuery = "SELECT product.*, product_category.*, brand.*"
+                        + "FROM product_category, product, brand "
                         + "WHERE product.category = product_category.id AND product.brand = brand.id";
         
         Connection connection = null;
@@ -39,15 +41,16 @@ public class ProductDAO {
             resultSet = stmt.executeQuery();
 
             while(resultSet.next()){
-                int id = resultSet.getInt("id"); 
+                int id = resultSet.getInt("product.id"); 
                 String name = resultSet.getString("name");                
-                String descrizione = resultSet.getString("descrizione");
-                double prezzo = resultSet.getDouble("price");
-                String caregoria = resultSet.getString("categoria");
-                String brand = resultSet.getString("brand");
-                String urlImmagine = resultSet.getString("image_path");
+                String desc = resultSet.getString("descrizione");
+                double price = resultSet.getDouble("price");
+                String urlImage = resultSet.getString("image_path");
+
+                ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
+                Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
                 
-                //result.add(new Product(id, name, descrizione, prezzo, caregoria, brand, urlImmagine));
+                result.add(new Product(id, name, desc, price, category, brand, urlImage));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +103,7 @@ public class ProductDAO {
      */
     public static boolean insertProduct(Product product){
         String sqlQuery = "INSERT INTO `product` (`id`, `name`, `descrizione`, `price`, `category`, `brand`, `image_path`) "
-                        + "VALUES (NULL, ?, ?, ?, ?, ?, NULL)";
+                        + "VALUES (NULL, ?, ?, ?, ?, ?, ?)";
         
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -115,6 +118,7 @@ public class ProductDAO {
             stmt.setDouble(3, product.getPrice());
             stmt.setInt(4, product.getCategory().getId());
             stmt.setInt(5, product.getBrand().getId());
+            stmt.setString(6, product.getUrlImage());
 
             stmt.executeUpdate();
             
