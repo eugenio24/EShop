@@ -2,12 +2,8 @@
 package com.main.eshop.servlets;
 
 import com.main.eshop.dao.ProductCategoryDAO;
-import com.main.eshop.dao.UserDAO;
 import com.main.eshop.model.ProductCategory;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,17 +30,28 @@ public class InsertProductCategory extends HttpServlet {
         String name = request.getParameter("name");
         String category = request.getParameter("category");
         
-        if(!(name.equals("") || category.equals(""))){
+        if(!(name == null || category == null || name.equals("") || category.equals(""))){
+            
+            ProductCategory productCategory = null;
+            
+            if(category.equals("isMain")){
+                productCategory = new ProductCategory(0, name);   
+            }else{                
                 int categoryId = Integer.parseInt(category);
-                ProductCategory productCategory = new ProductCategory(0, name, categoryId);   
-                
-                if(!ProductCategoryDAO.categoryExist(productCategory)){
-                    
+                productCategory = new ProductCategory(0, name, categoryId);   
+            }            
+
+            if(!ProductCategoryDAO.categoryExist(productCategory)){
+                if(ProductCategoryDAO.insertCategory(productCategory)){
+                    response.sendRedirect("admin.jsp?successCategory");
                 }else{
-                    // categoria gia esistente
+                    response.sendRedirect("admin.jsp?errorCategory=Errore durante l'inserimento");
                 }
+            }else{
+                response.sendRedirect("admin.jsp?errorCategory=Categoria gia' esistente");
+            }
         }else{
-            // errore dati
+            response.sendRedirect("admin.jsp?errorCategory=Dati Errati");
         }
     }
 

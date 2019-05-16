@@ -14,7 +14,7 @@ public class ProductCategory {
     private int mainCategoryId = 0;
 
     /**
-     * Constructor dor main category
+     * Constructor for main category
      * @param id ID
      * @param name Name
      */

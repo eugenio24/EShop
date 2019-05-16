@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:include page="/api/GetListProductCategories" />
+<jsp:include page="/api/GetListBrand" />
 
 <html>
     <head>
@@ -64,17 +65,17 @@
                     <h2>Inserimento Prodotti</h2>
                 </div>
                 <div class="card-body">            
-                    <form method="POST" action="">
+                    <form method="POST" action="InsertProduct">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="productName">Nome Prodotto</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="productName" placeholder="Nome Prodotto">
+                                <input type="text" name="name" class="form-control" id="productName" placeholder="Nome Prodotto" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="productDesc">Descrizione</label>
                             <div class="col-sm-10">
-                                <textarea type="text" name="desc" class="form-control" id="productDesc" placeholder="Descrizione Prodotto" rows="4"></textarea>
+                                <textarea type="text" name="desc" class="form-control" id="productDesc" placeholder="Descrizione Prodotto" rows="4" maxlength="500"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -83,25 +84,45 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">€</span>
                                 </div>
-                                <input step="0.1" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" />
+                                <input step="0.1" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" required />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="productCat">Categoria Prodotto</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="productCat">
-
+                                <select name="category" class="form-control" id="productCat" required>
+                                    <option value="">Seleziona una Categoria</option>
+                                    <c:forEach items="${categories}" var="item">
+                                        <option value="${item.id}">
+                                            ${item.name}
+                                        </option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="productBrand">Marca Prodotto</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="productBrand">
-
+                                <select name="brand" class="form-control" id="productBrand" required>
+                                    <option value="">Seleziona una Marca</option>
+                                    <c:forEach items="${brands}" var="item">
+                                        <option value="${item.id}">
+                                            ${item.name}
+                                        </option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
+                        <%  if(request.getParameter("errorProduct") != null){  %>                            
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <%= request.getParameter("errorProduct") %>
+                            </div>                            
+                        <%   }
+                            if(request.getParameter("successProduct") != null){  %>                            
+                            <div class="alert alert-success mt-3" role="alert">
+                                Prodotto inserito correttamente
+                            </div>                            
+                        <%   }   %>
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Prodotto</button>
                     </form>
                 </div>
@@ -118,7 +139,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="categoryName">Nome Categoria</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="categoryName" placeholder="Nome Categoria">
+                                <input type="text" name="name" class="form-control" id="categoryName" placeholder="Nome Categoria" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -126,14 +147,24 @@
                             <div class="col-sm-10">
                                 <select class="form-control" name="category" id="categoryMain">
                                     <option value="isMain">Seleziona categoria principale se necessario</option>
-                                    <c:forEach items="${categories}" var="elem">
+                                    <c:forEach items="${categories}" var="item">
                                         <option value="${item.id}">
-                                            ${elem.name}
+                                            ${item.name}
                                         </option>
                                     </c:forEach>
                                 </select>
                             </div>
                         </div>
+                        <%  if(request.getParameter("errorCategory") != null){  %>                            
+                            <div class="alert alert-danger mt-3" role="alert">
+                                <%= request.getParameter("errorCategory") %>
+                            </div>                            
+                        <%   }
+                            if(request.getParameter("successCategory") != null){  %>                            
+                            <div class="alert alert-success mt-3" role="alert">
+                                Categoria inserita correttamente
+                            </div>                            
+                        <%   }   %>
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Categoria</button>
                     </form>
                 </div>
@@ -154,12 +185,12 @@
                             </div>
                         </div>                    
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Inserisci Marca</button>
-                        <%  if(request.getAttribute("errorBrand") != null){  %>                            
+                        <%  if(request.getParameter("errorBrand") != null){  %>                            
                             <div class="alert alert-danger mt-3" role="alert">
-                                    ${errorBrand}
+                                    <%= request.getParameter("errorBrand") %>
                             </div>                            
                         <%   }
-                            if(request.getAttribute("successBrand") != null){  %>                            
+                            if(request.getParameter("successBrand") != null){  %>                            
                             <div class="alert alert-success mt-3" role="alert">
                                 Marca inserita correttamente
                             </div>                            

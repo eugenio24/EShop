@@ -29,23 +29,19 @@ public class InsertBrand extends HttpServlet {
         String name = request.getParameter("name");
         
         if(name != null && !name.equals("")){
-            Brand brand = new Brand(name);
+            Brand brand = new Brand(0, name);
             
             if(!BrandDAO.brandExist(brand)){
                 if(BrandDAO.insertBrand(brand)){
-                    request.setAttribute("successBrand", "");
-                    request.getRequestDispatcher("admin.jsp").include(request, response);
+                    response.sendRedirect("admin.jsp?successBrand");
                 }else{
-                    request.setAttribute("errorBrand", "Errore durante l'inserimento");
-                    request.getRequestDispatcher("admin.jsp").include(request, response);
+                    response.sendRedirect("admin.jsp?errorBrand=Errore durante l'inserimento");
                 }
             }else{
-                request.setAttribute("errorBrand", "Marca gia' esistente");
-                request.getRequestDispatcher("admin.jsp").include(request, response);
+                response.sendRedirect("admin.jsp?errorBrand=Marca gia' esistente");
             }
         }else{
-            request.setAttribute("errorBrand", "Dati Errati");
-            request.getRequestDispatcher("admin.jsp").include(request, response);
+            response.sendRedirect("admin.jsp?errorBrand=Dati Errati");
         }
     }
 
