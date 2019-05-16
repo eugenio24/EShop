@@ -106,13 +106,13 @@
 
             <c:forEach items="${prodotti}" var="prodotto">
                 <div class="col-md-3 col-sm-6" style="padding-right: 0px; box-sizing: content-box;">
-                    <form name="${prodotto.id}" id="${prodotto.id}" method="post">
+                    <form name="${prodotto.id}" id="${prodotto.id}" method="POST">
                         <figure class="card card-product">
-                             <div class="img-wrap"> <img src="${prodotto.urlImmagine}"></div>
+                             <div class="img-wrap"> <img src="${prodotto.urlImage}"></div>
                                <figcaption class="info-wrap">
                                      <a href="#" class="title">${prodotto.name}</a>
                                        <div class="price-wrap">
-                                            <span class="price-new">${prodotto.prezzo} €</span>
+                                            <span class="price-new">${prodotto.price} €</span>
                                             <button type="submit" class="btn btn-default ">Aggiungi al Carrello</button>
                                         </div>
                                 </figcaption>
