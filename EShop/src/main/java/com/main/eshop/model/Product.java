@@ -13,21 +13,33 @@ public class Product {
     
     private int id;
     private String name;
-    private String descrizione;
-    private double prezzo;
-    private String categoria;
-    private String brand;
-    private String urlImmagine;
+    private String desc;
+    private double price;    
+    private ProductCategory category;
+    private Brand brand;
+    private String urlImage;
 
-    public Product(int id, String name, String descrizione, double prezzo, String categoria, String brand, String urlImmagine) {
+    /**
+     * Constructor
+     * @param id ID 
+     * @param name Name
+     * @param desc Descrizione
+     * @param price Prezzo
+     * @param category ProductCategory
+     * @param brand Brand
+     * @param urlImage UrlImage 
+     */
+    public Product(int id, String name, String desc, double price, ProductCategory category, Brand brand, String urlImage) {
         this.id = id;
         this.name = name;
-        this.descrizione = descrizione;
-        this.prezzo = prezzo;
-        this.categoria = categoria;
+        this.desc = desc;
+        this.price = price;
+        this.category = category;
         this.brand = brand;
-        this.urlImmagine = urlImmagine;
+        this.urlImage = urlImage;
     }
+    
+    // GETTER SETTER
 
     public int getId() {
         return id;
@@ -45,48 +57,44 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescrizione() {
-        return descrizione;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public double getPrezzo() {
-        return prezzo;
+    public double getPrice() {
+        return price;
     }
 
-    public void setPrezzo(double prezzo) {
-        this.prezzo = prezzo;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public String getCategoria() {
-        return categoria;
+    public ProductCategory getCategory() {
+        return category;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setCategory(ProductCategory category) {
+        this.category = category;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
-    public String getUrlImmagine() {
-        return urlImmagine;
+    public String getUrlImage() {
+        return urlImage;
     }
 
-    public void setUrlImmagine(String urlImmagine) {
-        this.urlImmagine = urlImmagine;
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
-    
-    
-    
-    
 }

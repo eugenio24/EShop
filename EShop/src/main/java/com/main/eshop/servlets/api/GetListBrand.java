@@ -1,7 +1,7 @@
 
 package com.main.eshop.servlets.api;
 
-import com.main.eshop.dao.ProductCategoryDAO;
+import com.main.eshop.dao.BrandDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author eugenio.ferrari
+ * @author Eugenio
  */
-public class GetListProductCategories extends HttpServlet {
-
+public class GetListBrand extends HttpServlet {
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -24,8 +24,8 @@ public class GetListProductCategories extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
-        request.setAttribute("categories", ProductCategoryDAO.getListCategories());
+            throws ServletException, IOException {
+        request.setAttribute("brands", BrandDAO.getListBrands());
     }
 
 }

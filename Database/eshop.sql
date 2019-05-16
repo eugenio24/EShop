@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 16, 2019 alle 08:21
--- Versione del server: 10.1.37-MariaDB
--- Versione PHP: 7.3.0
+-- Creato il: Mag 16, 2019 alle 20:33
+-- Versione del server: 10.1.38-MariaDB
+-- Versione PHP: 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -72,8 +72,8 @@ CREATE TABLE `product` (
   `name` varchar(50) NOT NULL,
   `descrizione` varchar(500) DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
-  `category` int(11) DEFAULT NULL,
-  `brand` int(11) DEFAULT NULL,
+  `category` int(11) NOT NULL,
+  `brand` int(11) NOT NULL,
   `image_path` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -140,8 +140,8 @@ ALTER TABLE `order_row`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `category` (`category`) USING BTREE,
-  ADD KEY `brand` (`brand`);
+  ADD KEY `brand` (`brand`),
+  ADD KEY `category` (`category`);
 
 --
 -- Indici per le tabelle `product_category`
@@ -205,8 +205,8 @@ ALTER TABLE `order_row`
 -- Limiti per la tabella `product`
 --
 ALTER TABLE `product`
-  ADD CONSTRAINT `brand` FOREIGN KEY (`brand`) REFERENCES `brand` (`id`),
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `product_category` (`id`);
+  ADD CONSTRAINT `fk_brand` FOREIGN KEY (`brand`) REFERENCES `brand` (`id`),
+  ADD CONSTRAINT `fk_category` FOREIGN KEY (`category`) REFERENCES `product_category` (`id`);
 
 --
 -- Limiti per la tabella `product_category`

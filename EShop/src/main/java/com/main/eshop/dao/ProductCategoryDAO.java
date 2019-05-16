@@ -99,7 +99,7 @@ public class ProductCategoryDAO {
      * @return 
      */
     public static boolean categoryExist(ProductCategory category){
-        String sqlQuery = "SELECT * FROM brand WHERE name=?";
+        String sqlQuery = "SELECT * FROM product_category WHERE name=?";
         
         Connection connection = null;
         PreparedStatement stmt = null;
