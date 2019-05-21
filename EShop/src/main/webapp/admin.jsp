@@ -65,7 +65,7 @@
                     <h2>Inserimento Prodotti</h2>
                 </div>
                 <div class="card-body">            
-                    <form method="POST" action="InsertProduct">
+                    <form method="POST" action="InsertProduct" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label" for="productName">Nome Prodotto</label>
                             <div class="col-sm-10">
@@ -84,7 +84,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">€</span>
                                 </div>
-                                <input step="0.1" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" required />
+                                <input step="0.01" name="price" class="form-control currency" id="priceDesc" placeholder="Prezzo Prodotto" type="number" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="images">Immagini Prodotto</label>
+                            <div class="input-group col-sm-10">
+                                <input name="images" type="file" multiple class="file" id="images"/>
                             </div>
                         </div>
                         <div class="form-group row">
