@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,12 +46,19 @@ public class ProductDAO {
                 String name = resultSet.getString("name");                
                 String desc = resultSet.getString("descrizione");
                 double price = resultSet.getDouble("price");
-                String urlImage = resultSet.getString("image_path");
+                String images = resultSet.getString("image_path");
+                
+                ArrayList<String> imagesList = new ArrayList<>();
+                String[] array = images.split(";");
+                
+                for(String image: array) {
+                    imagesList.add("ecommerce_images/product/"+id+"/"+image);
+                }
 
                 ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
                 Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
                 
-                result.add(new Product(id, name, desc, price, category, brand, urlImage));
+                result.add(new Product(id, name, desc, price, category, brand, imagesList));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,7 +126,7 @@ public class ProductDAO {
             stmt.setDouble(3, product.getPrice());
             stmt.setInt(4, product.getCategory().getId());
             stmt.setInt(5, product.getBrand().getId());
-            stmt.setString(6, product.getUrlImage());
+            stmt.setString(6, product.listProductImages());
 
             stmt.executeUpdate();
             
