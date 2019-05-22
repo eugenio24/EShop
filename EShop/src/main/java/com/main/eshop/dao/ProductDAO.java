@@ -140,5 +140,56 @@ public class ProductDAO {
 
         return result;
     }
+    
+    /**
+     * Metodo che ritorna un prodotto 
+     * @param nameToSearch del Prodotto da cercare
+     * @return Prodotto cercato
+     */
+    public static Product getProduct(String nameToSearch){
+        String sqlQuery = "SELECT * FROM product WHERE name=?";
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        Product result = null;
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            stmt.setString(1, nameToSearch);
+
+            resultSet = stmt.executeQuery();
+
+            if(resultSet.next()){
+                int id = resultSet.getInt("product.id"); 
+                String name = resultSet.getString("name");                
+                String desc = resultSet.getString("descrizione");
+                double price = resultSet.getDouble("price");
+                String images = resultSet.getString("image_path");
+                
+                ArrayList<String> imagesList = new ArrayList<>();
+                String[] array = images.split(";");
+                
+                for(String image: array) {
+                    imagesList.add("ecommerce_images/product/"+id+"/"+image);
+                }
+
+                ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
+                Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
+                
+                result = new Product(id, name, desc, price, category, brand, imagesList);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+
+        return result;
+    }
             
 }

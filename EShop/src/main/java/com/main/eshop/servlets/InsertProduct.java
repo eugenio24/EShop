@@ -5,10 +5,13 @@ import com.main.eshop.dao.BrandDAO;
 import com.main.eshop.dao.ProductCategoryDAO;
 import com.main.eshop.dao.ProductDAO;
 import com.main.eshop.model.Product;
+import com.main.eshop.util.Image;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 
 /**
  *
@@ -38,60 +45,49 @@ public class InsertProduct extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String name = "";
+        String desc = "";
         double price = 0;
         int category = 0;
         int brand = 0;
+
+        ArrayList<Image> images = new ArrayList<>();
+               
         
-        String name = request.getParameter("name");
-        String desc = request.getParameter("desc");  
-
-        boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        
-        factory.setSizeThreshold(1024*500);
-        
-        factory.setRepository(new File("c:\\temp"));
-        
-        ServletFileUpload upload = new ServletFileUpload(factory);
-
-        upload.setSizeMax(1024*500);
-        
-        File file;
-
-        try { 
-            // Parse the request to get file items.
-            List fileItems = upload.parseRequest(request);
-
-            // Process the uploaded file items
-            Iterator i = fileItems.iterator();
-
-            while (i.hasNext()) {
-               FileItem fi = (FileItem)i.next();
-               if (!fi.isFormField()) {
-                  String fieldName = fi.getFieldName();
-                  String fileName = fi.getName();
-                  String contentType = fi.getContentType();
-                  boolean isInMemory = fi.isInMemory();
-                  long sizeInBytes = fi.getSize();
-
-                  if( fileName.lastIndexOf("\\") >= 0 ) {
-                     file = new File(fileName.substring( fileName.lastIndexOf("\\"))) ;
-                  } else {
-                     file = new File(fileName.substring(fileName.lastIndexOf("\\")+1)) ;
-                  }
-                  fi.write(file);
-               }
+        try {
+            List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+            
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    switch(item.getFieldName()){
+                        case "name":
+                            name = item.getString();
+                            break;
+                        case "desc":
+                            desc = item.getString();
+                            break;
+                        case "price":                            
+                            price = Double.parseDouble(item.getString());
+                            break;
+                        case "category":
+                            category = Integer.parseInt(item.getString());
+                            break;
+                        case "brand":
+                            brand = Integer.parseInt(item.getString());
+                            break;
+                    }
+                } else {                                        
+                    String fileName = FilenameUtils.getName(item.getName());
+                    InputStream fileContent = item.getInputStream();
+                    
+                    images.add(new Image(fileName, fileContent));
+                }
             }
-        } catch(Exception ex) {
-           System.out.println(ex);
-        }
-  
-        try{
-            price = Double.parseDouble(request.getParameter("price"));
-            category = Integer.parseInt(request.getParameter("category"));
-            brand = Integer.parseInt(request.getParameter("brand"));
-        }catch(NumberFormatException ex){
+        } catch (FileUploadException e) {
+            Logger.getLogger(InsertProduct.class.getName()).log(Level.SEVERE, null, e);
+            response.sendRedirect("admin.jsp?errorProduct=Errore");
+            return;
+        } catch(NumberFormatException ex){
             Logger.getLogger(InsertProduct.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect("admin.jsp?errorProduct=Dati Errati");
             return;
@@ -99,11 +95,27 @@ public class InsertProduct extends HttpServlet {
         
         
         if(!(name == null || desc == null || name.equals(""))){
-            Product product = new Product(0, name, desc, price, ProductCategoryDAO.getProductCategory(category), BrandDAO.getBrand(brand), new ArrayList<>());
+            
+            ArrayList<String> imgNames = new ArrayList<>();
+            
+            images.forEach((img) -> {
+                imgNames.add(img.getName());
+            });
+            
+            Product product = new Product(0, name, desc, price, ProductCategoryDAO.getProductCategory(category), BrandDAO.getBrand(brand), imgNames);
             
             if(!ProductDAO.productExist(product)){
                 if(ProductDAO.insertProduct(product)){
                     response.sendRedirect("admin.jsp?successProduct");
+                    
+                    int id = ProductDAO.getProduct(product.getName()).getId();
+                    String p = getServletContext().getRealPath("/");
+                    
+                    for(Image img: images){                        
+                        File targetFile = new File(p+"ecommerce_images/product/"+id+"/"+img.getName());
+                                                
+                        FileUtils.copyInputStreamToFile(img.getStream(), targetFile);
+                    }
                 }else{
                     response.sendRedirect("admin.jsp?errorProduct=Errore durante l'inserimento");
                 }
