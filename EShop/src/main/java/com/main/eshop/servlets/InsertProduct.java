@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +50,11 @@ public class InsertProduct extends HttpServlet {
         int brand = 0;
 
         ArrayList<Image> images = new ArrayList<>();
-               
+        
+        if (!ServletFileUpload.isMultipartContent(request)) {
+            response.sendRedirect("admin.jsp?errorProduct=Dati Errati");
+            return;
+        }               
         
         try {
             List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -76,11 +78,21 @@ public class InsertProduct extends HttpServlet {
                             brand = Integer.parseInt(item.getString());
                             break;
                     }
-                } else {                                        
-                    String fileName = FilenameUtils.getName(item.getName());
+                } else {        
+                    
+                    if(item.getSize() > 102400 || FilenameUtils.getExtension(FilenameUtils.getName(item.getName())).equals(".jpg")){
+                        response.sendRedirect("admin.jsp?errorProduct=Immagini massimo 100 Kb e jpg");
+                        return;
+                    }
+                    
+                    // salvo solo 4 immagini
+                    if(images.size() > 4){
+                        continue;
+                    }                                        
+                                       
                     InputStream fileContent = item.getInputStream();
                     
-                    images.add(new Image(fileName, fileContent));
+                    images.add(new Image(images.size()+".jpg", fileContent));
                 }
             }
         } catch (FileUploadException e) {
@@ -105,9 +117,7 @@ public class InsertProduct extends HttpServlet {
             Product product = new Product(0, name, desc, price, ProductCategoryDAO.getProductCategory(category), BrandDAO.getBrand(brand), imgNames);
             
             if(!ProductDAO.productExist(product)){
-                if(ProductDAO.insertProduct(product)){
-                    response.sendRedirect("admin.jsp?successProduct");
-                    
+                if(ProductDAO.insertProduct(product)){                    
                     int id = ProductDAO.getProduct(product.getName()).getId();
                     String p = getServletContext().getRealPath("/");
                     
@@ -116,6 +126,8 @@ public class InsertProduct extends HttpServlet {
                                                 
                         FileUtils.copyInputStreamToFile(img.getStream(), targetFile);
                     }
+                    
+                    response.sendRedirect("admin.jsp?successProduct");
                 }else{
                     response.sendRedirect("admin.jsp?errorProduct=Errore durante l'inserimento");
                 }

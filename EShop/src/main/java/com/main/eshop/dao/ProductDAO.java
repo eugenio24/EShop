@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -147,7 +146,10 @@ public class ProductDAO {
      * @return Prodotto cercato
      */
     public static Product getProduct(String nameToSearch){
-        String sqlQuery = "SELECT * FROM product WHERE name=?";
+        String sqlQuery = "SELECT product.*, product_category.*, brand.*"
+                + "FROM product_category, product, brand "
+                + "WHERE product.category = product_category.id AND product.brand = brand.id "
+                + "AND product.name=?";
         
         Connection connection = null;
         PreparedStatement stmt = null;
