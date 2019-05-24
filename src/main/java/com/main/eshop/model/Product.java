@@ -43,10 +43,13 @@ public class Product {
      */
     public String listProductImages(){
         String str = "";
+
+        for (String image : images) {
+            str += image+";";
+        }
         
-        str = images.stream().map((image) -> image.split("/")).map((imgArray) -> imgArray[imgArray.length-1]+";").reduce(str, String::concat);        
-        if(str != ""){
-            str = str.substring(0, str.length()-2);            
+        if(!"".equals(str)){
+            str = str.substring(0, str.length()-1);
         }
         
         return str;
