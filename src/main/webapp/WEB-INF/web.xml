@@ -40,6 +40,10 @@
         <servlet-name>InsertProduct</servlet-name>
         <servlet-class>com.main.eshop.servlets.InsertProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToBasket</servlet-name>
+        <servlet-class>com.main.eshop.servlets.api.AddToBasket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
         <url-pattern>/api/LoadProducts</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>InsertProduct</servlet-name>
         <url-pattern>/InsertProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToBasket</servlet-name>
+        <url-pattern>/AddToBasket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

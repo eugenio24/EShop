@@ -18,7 +18,6 @@
         <link rel="stylesheet" href="css/ui.css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        
         <script src="js/animate-arrow.js"></script>
     </head>
     <body>
@@ -46,7 +45,7 @@
                         <a class="nav-link" href="login.jsp">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
+                        <a class="nav-link" href="basket.jsp"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
@@ -96,33 +95,33 @@
         </a>
     </div>
     
-    <div id="products" style="height: 800px;">
+    <div id="products container" style="height: 800px;">
         
         <div class="padding-y-sm prova">
             <span style="padding: 35px;">${fn:length(prodotti)} prodotti disponibili</span>	
         </div>
         
+        
         <div class="row margine" id="products">          
-
             <c:forEach items="${prodotti}" var="prodotto">
                 <div class="col-md-3 col-sm-6" style="padding-right: 0px; box-sizing: content-box;">
-                    <form name="${prodotto.id}" id="${prodotto.id}" method="POST">
+                    <form method="POST" action="AddToBasket">
                         <figure class="card card-product">
-                             <div class="img-wrap"> <img src="${prodotto.images[0]}"></div>
-                               <figcaption class="info-wrap">
+                                <div class="img-wrap"> <!--<img src="${prodotto.images[0]}">--> <img src="images/1.jpg"></div>
+                                <figcaption class="info-wrap">
                                      <a href="#" class="title">${prodotto.name}</a>
                                         <div class="price-wrap">
                                             <span class="price-new">${prodotto.price} €</span>
-                                            <button type="submit" class="btn btn-default ">Aggiungi al Carrello</button>
+                                            <button type="submit" class="btn btn-default" name="idP" id="idP" value="${prodotto.id}">Aggiungi al Carrello</button>
                                         </div>
                                 </figcaption>
                         </figure>
                     </form>
                 </div>
-                
+
             </c:forEach>   
-            
         </div>
+        
     </div>
 
     
