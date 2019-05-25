@@ -6,7 +6,8 @@
 package com.main.eshop.servlets.api;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -23,13 +24,32 @@ public class AddToBasket extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {            
         
         String id = req.getParameter("idP"); 
+        System.out.println("com.main.eshop.servlets.api.AddToBasket.doPost()*************************************************");
+        Cookie[] cookie = req.getCookies();
         
-        Cookie cookie = new Cookie("prodotto", id);
+        String tmp = findCookie(cookie);
         
-        cookie.setMaxAge(60*60*24*7);
-        
-        res.addCookie(cookie);
+        if(tmp != null){ 
+            String content = tmp + "E" + id;
+            Cookie temp = new Cookie("basket", content);
+            temp.setMaxAge(-1);
+            res.addCookie(temp); 
+        }else{
+            Cookie temp = new Cookie("basket", id);
+            temp.setMaxAge(-1);
+            res.addCookie(temp);
+        }       
         res.sendRedirect("index.jsp");
+    }
+    
+    
+    public String findCookie(Cookie[] cookie){     
+        for(Cookie coo:cookie){
+            if(coo.getName().equals("basket")){
+                return coo.getValue();
+            }
+        }
+        return null;
     }
 
 }

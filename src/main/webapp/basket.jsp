@@ -11,6 +11,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,7 +49,7 @@
                         <a class="nav-link" href="login.jsp">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i><span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
