@@ -44,6 +44,10 @@
         <servlet-name>AddToBasket</servlet-name>
         <servlet-class>com.main.eshop.servlets.api.AddToBasket</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadBasket</servlet-name>
+        <servlet-class>com.main.eshop.servlets.api.LoadBasket</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
         <url-pattern>/api/LoadProducts</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>AddToBasket</servlet-name>
         <url-pattern>/AddToBasket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadBasket</servlet-name>
+        <url-pattern>/LoadBasket</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
