@@ -4,6 +4,7 @@
     Author     : Eugenio
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -58,35 +59,32 @@
             <aside class="col-sm-5 border-right">
                 <article class="gallery-wrap"> 
                     <div class="img-big-wrap">
-                        <div><img src="images/1.jpg"></div>
+                        <div><img src="${product.images[0]}"></div>
                     </div> 
                     <div class="img-small-wrap">
-                        <div class="item-gallery"> <img src="images/1.jpg"></div>
-                        <div class="item-gallery"> <img src="images/1.jpg"></div>
-                        <div class="item-gallery"> <img src="images/1.jpg"></div>
-                        <div class="item-gallery"> <img src="images/1.jpg"></div>
+                        <c:forEach items="${product.images}" var="image">
+                            <div class="item-gallery"> <img src="${image}"></div>
+                        </c:forEach>
                     </div> 
                 </article>
             </aside>
             <aside class="col-sm-7">
                 <article class="p-5">
-                    <h3 class="title mb-3">Original Version of Some product name</h3>
+                    <h3 class="title mb-3">${product.name}</h3>
                     <div class="mb-3"> 
                         <var class="price h3 text-warning"> 
-                            <span class="currency">€ </span><span class="num">1299</span>
+                            <span class="currency">€ </span><span class="num">${product.price}</span>
                         </var> 	
                     </div> 
                     <dl>
                         <dt>Descrizione</dt>
-                        <dd><p>Here goes description consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                      quis nostrud exercitation ullamco </p></dd>
+                        <dd><p>${product.desc}</p></dd>
                     </dl>
                     <hr>
                     <div class="row">
                         <div class="col-sm-5">
                             <dl class="dlist-inline">
-                                <dt>Qantit&agrave;: </dt>
+                                <dt>Quantit&agrave;: </dt>
                                 <dd> 
                                     <select class="form-control form-control-sm" style="width:70px;">
                                         <option> 1 </option>
