@@ -4,12 +4,21 @@
     Author     : eugenio.ferrari
 --%>
 
+<%@page import="com.main.eshop.model.User"%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+// controllo che solo gli admin possano accedere
+if(session.getAttribute("currentUser") == null || !((User)session.getAttribute("currentUser")).isIsAdmin()){
+    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Non sei autorizzato per questa pagina");
+    return;
+}
+%>
 
 <jsp:include page="/api/GetListProductCategories" />
 <jsp:include page="/api/GetListBrand" />
@@ -41,11 +50,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
+                    <%
+                    if(session.getAttribute("currentUser") != null && ((User)session.getAttribute("currentUser")).isIsAdmin()){ %>  
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Admin Page
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li> 
+                    <% } %>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
+                    <%
+                    if(session.getAttribute("currentUser") != null){ %>                        
+                        <a class="nav-link" href="Logout">Log Out</a>
+                    <% }else{ %>                        
                         <a class="nav-link" href="login.jsp">Log In</a>
+                    <% } %>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
