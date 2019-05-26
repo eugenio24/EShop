@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.main.eshop.servlets.api;
+package com.main.eshop.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,24 +18,23 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gianni
  */
-public class AddToBasket extends HttpServlet {
+public class AddToCart extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {            
         
-        String id = req.getParameter("idP"); 
-        System.out.println("com.main.eshop.servlets.api.AddToBasket.doPost()*************************************************");
+        String id = req.getParameter("idProduct");        
         Cookie[] cookie = req.getCookies();
         
         String tmp = findCookie(cookie);
         
         if(tmp != null){ 
             String content = tmp + "E" + id;
-            Cookie temp = new Cookie("basket", content);
+            Cookie temp = new Cookie("cart", content);
             temp.setMaxAge(-1);
             res.addCookie(temp); 
         }else{
-            Cookie temp = new Cookie("basket", id);
+            Cookie temp = new Cookie("cart", id);
             temp.setMaxAge(-1);
             res.addCookie(temp);
         }       
@@ -45,7 +44,7 @@ public class AddToBasket extends HttpServlet {
     
     public String findCookie(Cookie[] cookie){     
         for(Cookie coo:cookie){
-            if(coo.getName().equals("basket")){
+            if(coo.getName().equals("cart")){
                 return coo.getValue();
             }
         }
