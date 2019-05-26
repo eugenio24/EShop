@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gianni
  */
-public class LoadBasket extends HttpServlet {
+public class LoadCart extends HttpServlet {
 
     
     @Override

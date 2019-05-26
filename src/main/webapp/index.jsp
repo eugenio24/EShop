@@ -45,7 +45,7 @@
                         <a class="nav-link" href="login.jsp">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="basket.jsp"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
+                        <a class="nav-link" href="cart.jsp"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
@@ -106,14 +106,15 @@
         <div class="row margine" id="products">          
             <c:forEach items="${prodotti}" var="prodotto">
                 <div class="col-md-3 col-sm-6" style="padding-right: 0px; box-sizing: content-box;">
-                    <form method="POST" action="AddToBasket">
+                    <form method="POST" action="AddToCart">
                         <figure class="card card-product">
-                                <div class="img-wrap"> <!--<img src="${prodotto.images[0]}">--> <img src="images/1.jpg"></div>
+                                <div class="img-wrap"> <img src="${prodotto.images[0]}"> </div>
                                 <figcaption class="info-wrap">
                                      <a href="#" class="title">${prodotto.name}</a>
                                         <div class="price-wrap">
                                             <span class="price-new">${prodotto.price} €</span>
-                                            <button type="submit" class="btn btn-default" name="idP" id="idP" value="${prodotto.id}">Aggiungi al Carrello</button>
+                                            <input type="hidden"name="idProduct" value="${prodotto.id}">
+                                            <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
                                         </div>
                                 </figcaption>
                         </figure>

@@ -41,12 +41,12 @@
         <servlet-class>com.main.eshop.servlets.InsertProduct</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddToBasket</servlet-name>
-        <servlet-class>com.main.eshop.servlets.api.AddToBasket</servlet-class>
+        <servlet-name>AddToCart</servlet-name>
+        <servlet-class>com.main.eshop.servlets.AddToCart</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoadBasket</servlet-name>
-        <servlet-class>com.main.eshop.servlets.api.LoadBasket</servlet-class>
+        <servlet-name>LoadCart</servlet-name>
+        <servlet-class>com.main.eshop.servlets.api.LoadCart</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
@@ -89,12 +89,12 @@
         <url-pattern>/InsertProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddToBasket</servlet-name>
-        <url-pattern>/AddToBasket</url-pattern>
+        <servlet-name>AddToCart</servlet-name>
+        <url-pattern>/AddToCart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoadBasket</servlet-name>
-        <url-pattern>/LoadBasket</url-pattern>
+        <servlet-name>LoadCart</servlet-name>
+        <url-pattern>/api/LoadCart</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
