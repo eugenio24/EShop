@@ -96,7 +96,7 @@
         </a>
     </div>
     
-    <div id="products" style="height: 800px;">
+    <div id="products">
         
         <div class="padding-y-sm prova">
             <span style="padding: 35px;">${fn:length(prodotti)} prodotti disponibili</span>	
