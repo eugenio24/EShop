@@ -110,12 +110,12 @@
                         <figure class="card card-product">
                                 <div class="img-wrap"> <img src="${prodotto.images[0]}"> </div>
                                 <figcaption class="info-wrap">
-                                     <a href="#" class="title">${prodotto.name}</a>
-                                        <div class="price-wrap">
-                                            <span class="price-new">${prodotto.price} €</span>
-                                            <input type="hidden"name="idProduct" value="${prodotto.id}">
-                                            <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
-                                        </div>
+                                    <a href="ProductDetail?idProduct=${prodotto.id}" class="title">${prodotto.name}</a>
+                                    <div class="price-wrap">
+                                        <span class="price-new">${prodotto.price} €</span>
+                                        <input type="hidden"name="idProduct" value="${prodotto.id}">
+                                        <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
+                                    </div>
                                 </figcaption>
                         </figure>
                     </form>
