@@ -6,7 +6,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
-<jsp:include page="/api/LoadProducts"/>
+<%
+request.getRequestDispatcher("/api/LoadProducts").include(request, response);    
+%>
+
+<jsp:include page="/api/GetListProductCategories" />
 
 <html>
     <head>
@@ -20,6 +24,7 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
         <script src="js/animate-arrow.js"></script>
+        
     </head>
     <body>
         
@@ -138,17 +143,29 @@
             
             <div class="col-sm-2">
                 <h4>Filtra i risultati</h4>
-                <form action="" method="POST">
+                <form action="index.jsp#products" name="categoryFilter" method="GET">
+                    <div class="form-group">
+                        <input type="text" placeholder="Cerca per Nome..." class="form-control" name="textSearch">
+                    </div>   
                     <div class="form-group">
                         <select name="category" class="form-control" id="category">
-                            <option value="">Seleziona una Categoria</option>
+                            <option value="0">Tutte le categorie</option>
                             <c:forEach items="${categories}" var="item">
                                 <option value="${item.id}">
                                     ${item.name}
                                 </option>
                             </c:forEach>
                         </select>
-                    </div>
+                    </div> 
+                    <div class="form-group">
+                        <select name="orderBy" class="form-control" id="order">
+                            <option value="name_asc">Nome Crescente</option>
+                            <option value="name_desc">Nome Decrescente</option>
+                            <option value="price_asc">Prezzo Crescente</option>
+                            <option value="price_desc">Prezzo Decrescente</option>
+                        </select>
+                    </div>   
+                    <button type="submit" class="btn btn-secondary">Applica Filtri</button>
                 </form>
             </div>
             
