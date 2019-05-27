@@ -1,5 +1,6 @@
 package com.main.eshop.servlets;
 
+import com.main.eshop.dao.CartDAO;
 import com.main.eshop.dao.UserDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -37,7 +38,9 @@ public class Registration extends HttpServlet {
             
             if(UserDAO.insertNativeUser(user, salt, psw)){
                 HttpSession session = req.getSession();       
-                session.setAttribute("currentUser", UserDAO.getNativeUserFromUsername(user.getUsername())); 
+                user = UserDAO.getNativeUserFromUsername(user.getUsername());
+                CartDAO.createCart(user);
+                session.setAttribute("currentUser", user); 
                 resp.sendRedirect("index.jsp");
             }    
         }else{

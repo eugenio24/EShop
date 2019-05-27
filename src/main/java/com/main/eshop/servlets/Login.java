@@ -1,7 +1,9 @@
 
 package com.main.eshop.servlets;
 
+import com.main.eshop.dao.CartDAO;
 import com.main.eshop.dao.UserDAO;
+import com.main.eshop.model.User;
 import com.main.eshop.util.enums.LoginResult;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -25,7 +27,8 @@ public class Login extends HttpServlet {
         
         if(UserDAO.authenticateNativeUser(username, psw) == LoginResult.VALID){
             HttpSession session = req.getSession();       
-            session.setAttribute("currentUser", UserDAO.getNativeUserFromUsername(username)); 
+            User user = UserDAO.getNativeUserFromUsername(username);
+            session.setAttribute("currentUser", user);            
             resp.sendRedirect("index.jsp"); 
         }else{
             req.setAttribute("error", "invalid-login");            
