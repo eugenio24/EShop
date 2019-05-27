@@ -23,9 +23,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">        
         <link rel="stylesheet" href="css/my-style.css" />
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        
-        <script src="js/animate-arrow.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>                
     </head>
     <body>
         
@@ -43,6 +41,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-orders.jsp">Lista Ordini</a>
+                    </li> 
                     <%
                     if(session.getAttribute("currentUser") != null && ((User)session.getAttribute("currentUser")).isIsAdmin()){ %>  
                     <li class="nav-item">
@@ -132,11 +133,18 @@
                             <!-- /.Table body -->
 
                     </table>
-                        <form action="" methot="POST">                            
-                            <button type="submit" class="btn btn-secondary">Completa Ordine</button>
-                        </form>
     </div>
     <!-- /.Shopping Cart table -->
+                        <form action="ProcessOrder" method="POST">
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input type="text" class="form-control" placeholder="Indirizzo di consegna" name="shippingAddress" required>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-secondary">Completa Ordine</button>
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>    
