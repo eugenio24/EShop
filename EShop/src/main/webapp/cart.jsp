@@ -127,8 +127,25 @@
                                       </td>
                                     </tr>
                               </c:forEach>
-                              <!-- /.First row -->
 
+                                <tr>
+                                  <td colspan="3"></td>
+                                  <td>
+                                    <h4 class="mt-2">
+                                      <strong>Total</strong>
+                                    </h4>
+                                  </td>
+                                  <td class="text-right">
+                                    <h4 class="mt-2">
+                                      <strong>$2600</strong>
+                                    </h4>
+                                  </td>
+                                  <td colspan="3" class="text-right">
+                                    <button type="button" class="btn btn-primary btn-rounded">Complete purchase
+                                      <i class="fas fa-angle-right right"></i>
+                                    </button>
+                                  </td>
+                                </tr>
 
                             </tbody>
                             <!-- /.Table body -->
