@@ -123,6 +123,7 @@
                                     <div class="price-wrap">
                                         <span class="price-new">${prodotto.price} €</span>
                                         <input type="hidden"name="idProduct" value="${prodotto.id}">
+                                        <input type="hidden"name="quantity" value="1">
                                         <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
                                     </div>
                                 </figcaption>
