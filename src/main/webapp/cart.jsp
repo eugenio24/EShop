@@ -87,7 +87,7 @@
                                   <strong>Price</strong>
                                 </th>
                                 <th class="font-weight-bold">
-                                  <strong>QTY</strong>
+                                  <strong>Quantity</strong>
                                 </th>
                                 <th class="font-weight-bold">
                                   <strong>Amount</strong>
