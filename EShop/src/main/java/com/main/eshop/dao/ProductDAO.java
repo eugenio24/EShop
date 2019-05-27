@@ -5,6 +5,7 @@ import com.main.eshop.model.Product;
 import com.main.eshop.model.ProductCategory;
 import com.main.eshop.util.ConnectionManager;
 import com.main.eshop.util.DBUtils;
+import com.main.eshop.util.enums.OrderType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,12 +22,13 @@ public class ProductDAO {
     
     /**
      * Metodo che ritorna la lista di tutti i prodotti
+     * @param orderBy
      * @return ArrayList of Products
      */
-    public static ArrayList<Product> getAllProducts(){
+    public static ArrayList<Product> getAllProducts(OrderType orderBy){
         String sqlQuery = "SELECT product.*, product_category.*, brand.*"
                         + "FROM product_category, product, brand "
-                        + "WHERE product.category = product_category.id AND product.brand = brand.id";
+                        + "WHERE product.category = product_category.id AND product.brand = brand.id ORDER BY " + getOrderBy(orderBy);
         
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -68,10 +70,10 @@ public class ProductDAO {
         }
         
         return result;
-    }
+    }    
     
     /**
-     * Metodo che controlla se un utente esiste
+     * Metodo che controlla se un prodotto esiste
      * @param product Product da cercare
      * @return 
      */
@@ -100,6 +102,173 @@ public class ProductDAO {
             DBUtils.close(connection);
         }
 
+        return result;
+    }
+    
+    /**
+     * Metodo che ritorna la lista di tutti i prodotti di una categoria
+     * @param categoryId
+     * @param orderBy
+     * @return ArrayList of Products
+     */
+    public static ArrayList<Product> getProductsOfCategory(int categoryId, OrderType orderBy){
+        String sqlQuery = "SELECT product.*, product_category.*, brand.*"
+                        + "FROM product_category, product, brand "
+                        + "WHERE product.category = product_category.id AND product.brand = brand.id AND product.category=? ORDER BY " + getOrderBy(orderBy);
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        ArrayList<Product> result = new ArrayList<>();
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            
+            stmt.setInt(1, categoryId);
+
+            resultSet = stmt.executeQuery();
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("product.id"); 
+                String name = resultSet.getString("name");                
+                String desc = resultSet.getString("descrizione");
+                double price = resultSet.getDouble("price");
+                String images = resultSet.getString("image_path");
+                
+                ArrayList<String> imagesList = new ArrayList<>();
+                String[] array = images.split(";");
+                
+                for(String image: array) {
+                    imagesList.add("ecommerce_images/product/"+id+"/"+image);
+                }
+
+                ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
+                Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
+                
+                result.add(new Product(id, name, desc, price, category, brand, imagesList));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result;
+    }
+
+    /**
+     * Metodo che ritorna la lista di tutti i prodotti che contengono una certa stringa
+     * @param text
+     * @param orderBy
+     * @return ArrayList of Products
+     */
+    public static ArrayList<Product> getProductsByText(String text, OrderType orderBy){
+        String sqlQuery = "SELECT product.*, product_category.*, brand.*"
+                        + "FROM product_category, product, brand "
+                        + "WHERE product.category = product_category.id AND product.brand = brand.id AND product.name LIKE ? ORDER BY " + getOrderBy(orderBy);
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        ArrayList<Product> result = new ArrayList<>();
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+                        
+            stmt.setString(1, "%"+text+"%");
+
+            resultSet = stmt.executeQuery();
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("product.id"); 
+                String name = resultSet.getString("name");                
+                String desc = resultSet.getString("descrizione");
+                double price = resultSet.getDouble("price");
+                String images = resultSet.getString("image_path");
+                
+                ArrayList<String> imagesList = new ArrayList<>();
+                String[] array = images.split(";");
+                
+                for(String image: array) {
+                    imagesList.add("ecommerce_images/product/"+id+"/"+image);
+                }
+
+                ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
+                Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
+                
+                result.add(new Product(id, name, desc, price, category, brand, imagesList));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result;
+    }    
+    
+    /**
+     * Metodo che ritorna la lista di tutti i prodotti di una categoria e con un nome simile
+     * @param categoryId
+     * @param text
+     * @param orderBy
+     * @return ArrayList of Products
+     */
+    public static ArrayList<Product> getProductsByTextAndCategory(int categoryId, String text, OrderType orderBy){
+        String sqlQuery = "SELECT product.*, product_category.*, brand.*"
+                        + "FROM product_category, product, brand "
+                        + "WHERE product.category = product_category.id AND product.brand = brand.id AND product.category=? AND product.name LIKE ? ORDER BY " + getOrderBy(orderBy);
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        ArrayList<Product> result = new ArrayList<>();
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            
+            stmt.setInt(1, categoryId);
+            stmt.setString(2, "%" + text + "%"); 
+
+            resultSet = stmt.executeQuery();
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("product.id"); 
+                String name = resultSet.getString("name");                
+                String desc = resultSet.getString("descrizione");
+                double price = resultSet.getDouble("price");
+                String images = resultSet.getString("image_path");
+                
+                ArrayList<String> imagesList = new ArrayList<>();
+                String[] array = images.split(";");
+                
+                for(String image: array) {
+                    imagesList.add("ecommerce_images/product/"+id+"/"+image);
+                }
+
+                ProductCategory category = new ProductCategory(resultSet.getInt("product_category.id"), resultSet.getString("product_category.name"), resultSet.getInt("product_category.main_category"));                
+                Brand brand = new Brand(resultSet.getInt("brand.id"), resultSet.getString("brand.name"));
+                
+                result.add(new Product(id, name, desc, price, category, brand, imagesList));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
         return result;
     }
     
@@ -247,5 +416,20 @@ public class ProductDAO {
 
         return result;
     }
-            
+    
+    public static String getOrderBy(OrderType order){
+        switch (order) {
+            case NAME_ASC:
+                return "product.name ASC";
+            case NAME_DESC:
+                return "product.name DESC";
+            case PRICE_ASC:
+                return "product.price ASC";
+            case PRICE_DESC:
+                return "product.price DESC";
+            default:
+                return "product.name ASC";
+        }
+    }
+                   
 }
