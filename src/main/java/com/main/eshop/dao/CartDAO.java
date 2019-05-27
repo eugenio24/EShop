@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,7 +106,7 @@ public class CartDAO {
         return result;
     }
    
-   public static Cart getCartFormUserId(int userId){
+    public static Cart getCartFormUserId(int userId){
        
         String sqlQuery = "SELECT * FROM cart WHERE idUser = ?";
        
@@ -136,6 +137,76 @@ public class CartDAO {
         }
         
         return result;
+    }
+    
+    public static Cart getCartFormCartId(int cartId){
+       
+        String sqlQuery = "SELECT * FROM cart WHERE id = ?";
+       
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        Cart result = null;
+       
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            
+            stmt.setInt(1, cartId);
+            
+
+            resultSet = stmt.executeQuery();
+            
+            if(resultSet.next()){
+                result = new Cart( resultSet.getInt("id"), UserDAO.getUserFromId(resultSet.getInt("id")));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result;
+    }
+   
+   
+   public static ArrayList<CartRow> getAllRowPerCartId(int cartId){
+       
+       String sqlQuery = "SELECT * FROM cart_row WHERE idCart = ?";
+       
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        ArrayList<CartRow> result = new ArrayList<>();
+       
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setInt(1, cartId);
+
+            resultSet = stmt.executeQuery();
+            
+            while(resultSet.next()){ 
+                int id = resultSet.getInt("id");
+                int idCart = resultSet.getInt("idCart");
+                int idProduct = resultSet.getInt("idProduct");
+                int quantity = resultSet.getInt("quantity");
+                result.add(new CartRow(id,getCartFormCartId(idCart),ProductDAO.getProduct(idProduct),quantity));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result; 
    }
     
 }

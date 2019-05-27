@@ -35,13 +35,10 @@ public class AddToCart extends HttpServlet {
         
         if(session != null && session.getAttribute("currentUser") != null){
             // l'utente è loggato salva il carrello nel db
-            
             User user = (User)session.getAttribute("currentUser");
             
             CartRow row = new CartRow(0,CartDAO.getCartFormUserId(user.getId()),ProductDAO.getProduct(id),quantity);
-            
-            CartDAO.insertItemToCart(row);
-          
+            CartDAO.insertItemToCart(row);         
         }else{
             String cookie = findCookie(req.getCookies());
             JSONObject jsonCookie;
