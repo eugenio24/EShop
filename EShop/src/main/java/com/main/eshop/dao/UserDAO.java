@@ -208,9 +208,6 @@ public class UserDAO {
             stmt.setString(5, user.getExternalId());
 
             stmt.executeUpdate();
-
-            //Creazione carrello
-            CartDAO.createCartForGoogleUser(user);
             
             result = true;
         } catch (SQLException ex) {
@@ -253,9 +250,6 @@ public class UserDAO {
 
             stmt.executeUpdate();
 
-            //Creazione carrello
-            CartDAO.createCartForNativeUser(user);
-            
             result = true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);

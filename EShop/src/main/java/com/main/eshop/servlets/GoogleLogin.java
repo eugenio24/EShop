@@ -6,6 +6,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.main.eshop.dao.CartDAO;
 import com.main.eshop.dao.UserDAO;
 import com.main.eshop.model.User;
 import com.main.eshop.util.enums.RegistrationType;
@@ -67,12 +68,15 @@ public class GoogleLogin extends HttpServlet {
         
         if(UserDAO.userExist(user)){
             HttpSession session = request.getSession();
-            session.setAttribute("currentUser", UserDAO.getGoogleUserFromExternalId(user.getExternalId()));
+            user = UserDAO.getGoogleUserFromExternalId(user.getExternalId());            
+            session.setAttribute("currentUser", user);
             response.getWriter().write("{ \"success\": true, \"url\": \"index.jsp\" }");            
         }else{
             if(UserDAO.insertGoogleUser(user)){                              
                 HttpSession session = request.getSession();       
-                session.setAttribute("currentUser", UserDAO.getGoogleUserFromExternalId(user.getExternalId())); 
+                user = UserDAO.getGoogleUserFromExternalId(user.getExternalId());
+                CartDAO.createCart(user);
+                session.setAttribute("currentUser", user);                
                 response.getWriter().write("{ \"success\": true, \"url\": \"index.jsp\" }");         
             }else{
                 // todo: mettere un errore per l'utente                

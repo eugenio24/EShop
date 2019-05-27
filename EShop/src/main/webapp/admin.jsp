@@ -67,7 +67,7 @@ if(session.getAttribute("currentUser") == null || !((User)session.getAttribute("
                     <% } %>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
+                        <a class="nav-link" href="cart.jsp"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
