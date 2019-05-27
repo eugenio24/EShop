@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 27, 2019 alle 15:55
+-- Creato il: Mag 27, 2019 alle 21:23
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -171,8 +171,8 @@ ALTER TABLE `order_head`
 --
 ALTER TABLE `order_row`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idOrder` (`idOrder`),
-  ADD KEY `idProduct` (`idProduct`);
+  ADD KEY `idProduct` (`idProduct`),
+  ADD KEY `idOrder` (`idOrder`);
 
 --
 -- Indici per le tabelle `product`
@@ -215,6 +215,18 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT per la tabella `cart_row`
 --
 ALTER TABLE `cart_row`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `order_head`
+--
+ALTER TABLE `order_head`
+  MODIFY `order_number` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `order_row`
+--
+ALTER TABLE `order_row`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

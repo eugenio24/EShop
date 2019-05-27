@@ -56,6 +56,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>com.main.eshop.servlets.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProcessOrder</servlet-name>
+        <servlet-class>com.main.eshop.servlets.ProcessOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
         <url-pattern>/api/LoadProducts</url-pattern>
@@ -112,10 +116,13 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcessOrder</servlet-name>
+        <url-pattern>/ProcessOrder</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    
     <error-page>
         <error-code>401</error-code>
         <location>/errors-pages/unauthorized.jsp</location>

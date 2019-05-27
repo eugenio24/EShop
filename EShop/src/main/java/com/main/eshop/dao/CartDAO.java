@@ -257,4 +257,31 @@ public class CartDAO {
         return result;
     }
     
+    public static boolean deteteRows(Cart cart){
+        String sqlQuery = "DELETE FROM cart_row WHERE idCart=?";
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        
+        boolean result = false;
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            
+            stmt.setInt(1, cart.getId());
+
+            stmt.executeUpdate();
+            
+            result = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+
+        return result;
+    }
+    
 }

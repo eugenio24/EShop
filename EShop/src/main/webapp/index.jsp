@@ -44,6 +44,9 @@ request.getRequestDispatcher("/api/LoadProducts").include(request, response);
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-orders.jsp">Lista Ordini</a>
+                    </li> 
                     <%
                     if(session.getAttribute("currentUser") != null && ((User)session.getAttribute("currentUser")).isIsAdmin()){ %>  
                     <li class="nav-item">
