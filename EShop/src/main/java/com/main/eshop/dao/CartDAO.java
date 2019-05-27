@@ -168,6 +168,7 @@ public class CartDAO {
         ResultSet resultSet = null;
         
         boolean result = false;
+        int idRow = -1;
         
         try {
             connection = ConnectionManager.getConnection();
