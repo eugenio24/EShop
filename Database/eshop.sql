@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 16, 2019 alle 20:33
+-- Creato il: Mag 27, 2019 alle 15:55
 -- Versione del server: 10.1.38-MariaDB
 -- Versione PHP: 7.3.4
 
@@ -31,6 +31,30 @@ SET time_zone = "+00:00";
 CREATE TABLE `brand` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `cart_row`
+--
+
+CREATE TABLE `cart_row` (
+  `id` int(11) NOT NULL,
+  `idCart` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -121,6 +145,21 @@ ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indici per le tabelle `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Indici per le tabelle `cart_row`
+--
+ALTER TABLE `cart_row`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idCart` (`idCart`),
+  ADD KEY `idProduct` (`idProduct`);
+
+--
 -- Indici per le tabelle `order_head`
 --
 ALTER TABLE `order_head`
@@ -167,10 +206,22 @@ ALTER TABLE `brand`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT per la tabella `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT per la tabella `cart_row`
+--
+ALTER TABLE `cart_row`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT per la tabella `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `product_category`
@@ -187,6 +238,19 @@ ALTER TABLE `user`
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `cart_row`
+--
+ALTER TABLE `cart_row`
+  ADD CONSTRAINT `cart_row_ibfk_1` FOREIGN KEY (`idCart`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cart_row_ibfk_2` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `order_head`

@@ -36,3 +36,13 @@ order_row
  - idProduct FK->product
  - quantity 
  - price (singolo, non per tutta la quantità)
+
+cart 
+ - id
+ - idUser
+
+cart_row
+ - id
+ - idCart
+ - idProduct
+ - quantity
