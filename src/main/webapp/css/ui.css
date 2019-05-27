@@ -2252,3 +2252,8 @@ ul.row, ul.row-sm {
     margin-left: 0px; }
 
 /*# sourceMappingURL=ui.css.map */
+
+.row{
+    margin-right: 0; 
+    margin-left: 0; 
+}

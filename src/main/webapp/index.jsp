@@ -111,26 +111,46 @@
             <span style="padding: 35px;">${fn:length(prodotti)} prodotti disponibili</span>	
         </div>
         
+        <div class="row">            
         
-        <div class="row margine" id="products">          
-            <c:forEach items="${prodotti}" var="prodotto">
-                <div class="col-md-3 col-sm-6" style="padding-right: 0px; box-sizing: content-box;">
-                    <form method="POST" action="AddToCart">
-                        <figure class="card card-product">
-                                <div class="img-wrap"> <img src="${prodotto.images[0]}"> </div>
-                                <figcaption class="info-wrap">
-                                    <a href="ProductDetail?idProduct=${prodotto.id}" class="title">${prodotto.name}</a>
-                                    <div class="price-wrap">
-                                        <span class="price-new">${prodotto.price} €</span>
-                                        <input type="hidden"name="idProduct" value="${prodotto.id}">
-                                        <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
-                                    </div>
-                                </figcaption>
-                        </figure>
-                    </form>
+            <div class="col margine" id="products">        
+                <div class="row">
+                    <c:forEach items="${prodotti}" var="prodotto">
+                        <div class="col-md-3">
+                            <form method="POST" action="AddToCart">
+                                <figure class="card card-product">
+                                        <div class="img-wrap"> <img src="${prodotto.images[0]}"> </div>
+                                        <figcaption class="info-wrap">
+                                            <a href="ProductDetail?idProduct=${prodotto.id}" class="title">${prodotto.name}</a>
+                                            <div class="price-wrap">
+                                                <span class="price-new">${prodotto.price} €</span>
+                                                <input type="hidden"name="idProduct" value="${prodotto.id}">
+                                                <button type="submit" class="btn btn-default">Aggiungi al Carrello</button>
+                                            </div>
+                                        </figcaption>
+                                </figure>
+                            </form>
+                        </div>
+                    </c:forEach>   
                 </div>
-
-            </c:forEach>   
+            </div>
+            
+            <div class="col-sm-2">
+                <h4>Filtra i risultati</h4>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <select name="category" class="form-control" id="category">
+                            <option value="">Seleziona una Categoria</option>
+                            <c:forEach items="${categories}" var="item">
+                                <option value="${item.id}">
+                                    ${item.name}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
         </div>
         
     </div>
