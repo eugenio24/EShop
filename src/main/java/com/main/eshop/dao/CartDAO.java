@@ -84,17 +84,31 @@ public class CartDAO {
         PreparedStatement stmt = null;
         
         boolean result = false;
+        int idRow = -1;
         
         try {
             connection = ConnectionManager.getConnection();
             stmt = connection.prepareStatement(sqlQuery);
             
-            stmt.setInt(1, item.getCart().getId());
-            stmt.setInt(2, item.getProduct().getId());
-            stmt.setInt(3, item.getQuantity());
-
-            stmt.executeUpdate();
+            boolean trovato = false;
+            ArrayList<CartRow> cartRow = getAllRowPerCartId(item.getCart().getId());
             
+            for(CartRow row : cartRow){
+                if(row.getProduct().getId() == item.getProduct().getId()){
+                    trovato = true;
+                    idRow = row.getId();
+                }
+            }
+            
+            if(!trovato){
+                stmt.setInt(1, item.getCart().getId());
+                stmt.setInt(2, item.getProduct().getId());
+                stmt.setInt(3, item.getQuantity());
+                stmt.executeUpdate();
+            }else{
+                updateCartRow(getCardRowFromId(idRow));
+            }
+       
             result = true;
         } catch (SQLException ex) {
             Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,6 +221,71 @@ public class CartDAO {
         }
         
         return result; 
-   }
+    }
+   
+    public static CartRow getCardRowFromId(int id){
+        String sqlQuery = "SELECT * FROM cart_row WHERE id = ?";
+       
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        CartRow result = null;
+       
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setInt(1, id);
+
+            resultSet = stmt.executeQuery();
+            
+            if(resultSet.next()){
+                result = new CartRow(id, getCartFormCartId(resultSet.getInt("idCart")), ProductDAO.getProduct(resultSet.getInt("idProduct")), resultSet.getInt("quantity"));
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result;
+    }
+   
+    public static boolean updateCartRow(CartRow row){
+        
+        String sqlQuery = "UPDATE `cart_row` SET `id` = ?,`idCart` = ?,`idProduct` = ?,`quantity`= ? WHERE id = ?";
+       
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        
+        boolean result = false;
+       
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setInt(1, row.getId());
+            stmt.setInt(2, row.getCart().getId());
+            stmt.setInt(3, row.getProduct().getId());
+            stmt.setInt(4, (row.getQuantity()+1));
+            stmt.setInt(5, row.getId());
+
+            stmt.executeUpdate();
+            
+            result = true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(BrandDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
+        return result;
+        
+    }
     
 }
