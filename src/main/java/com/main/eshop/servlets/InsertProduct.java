@@ -123,7 +123,7 @@ public class InsertProduct extends HttpServlet {
                     
                     for(Image img: images){                        
                         File targetFile = new File(p+"ecommerce_images/product/"+id+"/"+img.getName());
-                                                
+
                         FileUtils.copyInputStreamToFile(img.getStream(), targetFile);
                     }
                     

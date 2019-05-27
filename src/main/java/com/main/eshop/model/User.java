@@ -8,7 +8,9 @@ import java.sql.Timestamp;
  *
  * @author Eugenio
  */
-public class User {    
+public class User {
+    
+    private int id;
     private String email;
     private String name;
     private String surname;
@@ -22,6 +24,7 @@ public class User {
 
     /**
      * Constructor
+     * @param id id
      * @param email Email
      * @param name Name
      * @param surname Surname
@@ -30,7 +33,8 @@ public class User {
      * @param registrationType Registration Type
      * @param isAdmin is admin user
      */
-    public User(String email, String name, String surname, Timestamp registrationDate, String identificator, RegistrationType registrationType, boolean isAdmin) {
+    public User(int id, String email, String name, String surname, Timestamp registrationDate, String identificator, RegistrationType registrationType, boolean isAdmin) {
+        this.id = id;
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -44,9 +48,16 @@ public class User {
             this.externalId = identificator;
     }
     
-    
     // GETTER AND SETTER
     
+    public int getId() {    
+        return id;
+    }
+
+    public void setId(int id) {    
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
     }

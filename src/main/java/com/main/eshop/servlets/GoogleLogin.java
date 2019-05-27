@@ -43,7 +43,7 @@ public class GoogleLogin extends HttpServlet {
             return;
         }                
                 
-        // Exchange auth code for access token        
+        // Exchange auth code for access token
         GoogleTokenResponse tokenResponse = new GoogleAuthorizationCodeTokenRequest(new NetHttpTransport(), 
                                                                                     JacksonFactory.getDefaultInstance(), 
                                                                                     "https://www.googleapis.com/oauth2/v4/token",
@@ -63,16 +63,16 @@ public class GoogleLogin extends HttpServlet {
         String familyName = (String) payload.get("family_name");
         String givenName = (String) payload.get("given_name");
         
-        User user = new User(email, givenName, familyName, new Timestamp(System.currentTimeMillis()), userId, RegistrationType.GOOGLE, false);
+        User user = new User(0, email, givenName, familyName, new Timestamp(System.currentTimeMillis()), userId, RegistrationType.GOOGLE, false);
         
         if(UserDAO.userExist(user)){
             HttpSession session = request.getSession();
-            session.setAttribute("currentUser", user); 
+            session.setAttribute("currentUser", UserDAO.getGoogleUserFromExternalId(user.getExternalId()));
             response.getWriter().write("{ \"success\": true, \"url\": \"index.jsp\" }");            
         }else{
             if(UserDAO.insertGoogleUser(user)){                              
                 HttpSession session = request.getSession();       
-                session.setAttribute("currentUser", user); 
+                session.setAttribute("currentUser", UserDAO.getGoogleUserFromExternalId(user.getExternalId())); 
                 response.getWriter().write("{ \"success\": true, \"url\": \"index.jsp\" }");         
             }else{
                 // todo: mettere un errore per l'utente                

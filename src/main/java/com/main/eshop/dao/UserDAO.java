@@ -98,7 +98,7 @@ public class UserDAO {
     }
 
     /**
-     * Metodo che ritorna un utente
+     * Metodo che ritorna un utente native
      *
      * @param username Username del utente
      * @return User Model
@@ -120,13 +120,14 @@ public class UserDAO {
             resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
-                result = new User(resultSet.getString("email"),
-                        resultSet.getString("name"),
-                        resultSet.getString("surname"),
-                        resultSet.getTimestamp("registration_date"),
-                        resultSet.getString("username"),
-                        RegistrationType.NATIVE,
-                        resultSet.getBoolean("is_admin"));
+                result = new User(resultSet.getInt("id"),
+                                resultSet.getString("email"),
+                                resultSet.getString("name"),
+                                resultSet.getString("surname"),
+                                resultSet.getTimestamp("registration_date"),
+                                resultSet.getString("username"),
+                                RegistrationType.NATIVE,
+                                resultSet.getBoolean("is_admin"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,6 +137,49 @@ public class UserDAO {
             DBUtils.close(connection);
         }
 
+        return result;
+    }
+    
+    /**
+     * Metodo che ritorna un utente Google
+     *
+     * @param externalId id google del utente
+     * @return User Model
+     */
+    public static User getGoogleUserFromExternalId(String externalId) {
+        String sqlQuery = "SELECT * FROM user WHERE external_id=?";
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+
+        User result = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            stmt.setString(1, externalId);
+
+            resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                result = new User(resultSet.getInt("id"),
+                                resultSet.getString("email"),
+                                resultSet.getString("name"),
+                                resultSet.getString("surname"),
+                                resultSet.getTimestamp("registration_date"),
+                                resultSet.getString("external_id"),
+                                RegistrationType.GOOGLE,
+                                resultSet.getBoolean("is_admin"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
         return result;
     }
 
