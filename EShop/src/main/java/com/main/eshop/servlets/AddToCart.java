@@ -5,6 +5,9 @@
  */
 package com.main.eshop.servlets;
 
+import com.main.eshop.dao.CartDAO;
+import com.main.eshop.dao.ProductDAO;
+import com.main.eshop.model.CartRow;
 import com.main.eshop.model.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -32,8 +35,13 @@ public class AddToCart extends HttpServlet {
         
         if(session != null && session.getAttribute("currentUser") != null){
             // l'utente è loggato salva il carrello nel db
+            
             User user = (User)session.getAttribute("currentUser");
-            System.out.println("test");
+            
+            CartRow row = new CartRow(0,CartDAO.getCartFormUserId(user.getId()),ProductDAO.getProduct(id),quantity);
+            
+            CartDAO.insertItemToCart(row);
+          
         }else{
             String cookie = findCookie(req.getCookies());
             JSONObject jsonCookie;

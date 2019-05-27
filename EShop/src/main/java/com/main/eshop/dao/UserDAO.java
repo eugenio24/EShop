@@ -209,6 +209,9 @@ public class UserDAO {
 
             stmt.executeUpdate();
 
+            //Creazione carrello
+            CartDAO.createCartForGoogleUser(user);
+            
             result = true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -250,6 +253,9 @@ public class UserDAO {
 
             stmt.executeUpdate();
 
+            //Creazione carrello
+            CartDAO.createCartForNativeUser(user);
+            
             result = true;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -293,5 +299,45 @@ public class UserDAO {
         }
 
         return result;
+    }
+    
+    public static User getUserFromId(int id){
+        
+        String sqlQuery = "SELECT * FROM user WHERE id=?";
+
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+
+        User result = null;
+
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+            stmt.setInt(1, id);
+
+            resultSet = stmt.executeQuery();
+
+            if(resultSet.next()){
+                
+                result = new User(resultSet.getInt("id"),
+                                resultSet.getString("email"),
+                                resultSet.getString("name"),
+                                resultSet.getString("surname"),
+                                resultSet.getTimestamp("registration_date"),
+                                resultSet.getString("external_id"),
+                                RegistrationType.GOOGLE,
+                                resultSet.getBoolean("is_admin"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+
+        return result;
+        
     }
 }
