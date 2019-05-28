@@ -60,6 +60,14 @@
         <servlet-name>ProcessOrder</servlet-name>
         <servlet-class>com.main.eshop.servlets.ProcessOrder</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListOrders</servlet-name>
+        <servlet-class>com.main.eshop.servlets.ListOrders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListOrders</servlet-name>
+        <servlet-class>com.main.eshop.servlets.api.GetListOrders</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadProducts</servlet-name>
         <url-pattern>/api/LoadProducts</url-pattern>
@@ -119,6 +127,14 @@
     <servlet-mapping>
         <servlet-name>ProcessOrder</servlet-name>
         <url-pattern>/ProcessOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrders</servlet-name>
+        <url-pattern>/ListOrders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListOrders</servlet-name>
+        <url-pattern>/api/GetListOrders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
