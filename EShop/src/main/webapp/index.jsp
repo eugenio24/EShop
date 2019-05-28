@@ -101,6 +101,16 @@ request.getRequestDispatcher("/api/LoadProducts").include(request, response);
                     </div>
                 </div>
             </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="images/banner4.jpg">
+                <div class="carousel-caption d-none d-md-block banner-font">
+                    <h1>Il negozio per gli appassionati della montagna</h1>
+                    <p>Prova subito i nostri prodotti.</p>
+                    <div class="arrow bounce">
+                        <a class="fa fa-angle-down fa-2x my-arrow-down" href="#products"></a>
+                    </div>
+                </div>
+            </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
