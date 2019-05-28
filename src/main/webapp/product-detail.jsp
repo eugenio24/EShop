@@ -58,7 +58,7 @@
                     <% } %>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
+                        <a class="nav-link" href="cart.jsp"><i class="fas fa-shopping-cart"></i>  <span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
@@ -93,22 +93,25 @@
                         <dd><p>${product.desc}</p></dd>
                     </dl>
                     <hr>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <dl class="dlist-inline">
-                                <dt>Quantit&agrave;: </dt>
-                                <dd> 
-                                    <select class="form-control form-control-sm" style="width:70px;">
-                                        <option> 1 </option>
-                                        <option> 2 </option>
-                                        <option> 3 </option>
-                                    </select>
-                                </dd>
-                            </dl> 
-                        </div> 
-                    </div>
-                    <hr>	
-                    <a href="#" class="btn  btn-outline-primary"> <i class="fas fa-shopping-cart"></i> Aggiungi al carrello </a>
+                    <form method="POST" action="AddToCart">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <dl class="dlist-inline">
+                                    <dt>Quantit&agrave;: </dt>
+                                    <dd> 
+                                        <select class="form-control form-control-sm" style="width:70px;" name="quantity">
+                                            <option> 1 </option>
+                                            <option> 2 </option>
+                                            <option> 3 </option>
+                                        </select>
+                                    </dd>
+                                </dl> 
+                            </div> 
+                        </div>
+                        <hr>
+                            <input type="hidden" name="idProduct" value="${product.id}">
+                            <button type="submit" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i> Aggiungi al carrello </a></button>
+                    </form>
                 </article> 
             </aside> 
 	</div> 
