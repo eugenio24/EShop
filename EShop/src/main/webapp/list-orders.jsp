@@ -7,6 +7,18 @@
 <%@page import="com.main.eshop.model.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
+
+<%
+// controllo che solo gli admin possano accedere
+if(session.getAttribute("currentUser") == null){
+    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Non sei autorizzato per questa pagina");
+    return;
+}
+%>
+
+<jsp:include page="/api/GetListOrders" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,6 +28,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">        
         <link rel="stylesheet" href="css/my-style.css" />
+        <link rel="stylesheet" href="css/ui.css" />
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>  
     </head>
@@ -33,9 +46,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
+                    <%
+                    if(session.getAttribute("currentUser") != null){ %>                        
                     <li class="nav-item">
                         <a class="nav-link" href="list-orders.jsp">Lista Ordini</a>
-                    </li> 
+                    </li>
+                    <% }%>
                     <%
                     if(session.getAttribute("currentUser") != null && ((User)session.getAttribute("currentUser")).isIsAdmin()){ %>  
                     <li class="nav-item">
@@ -51,7 +67,7 @@
                     <% } %>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i><span>Carrello</span></a>
+                        <a class="nav-link" href="cart.jsp"><i class="fas fa-shopping-cart"></i><span>Carrello</span></a>
                     </li>
                 </ul>
             </div>
@@ -60,7 +76,29 @@
                     
         <section>
             <br>
+            <div class="container">            
 
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Numero Ordine</th>
+                      <th scope="col">Data Ordine</th>
+                      <th scope="col">Prezzo Totale</th>
+                      <th scope="col">Indirizzo Consegna</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <c:forEach items="${orders}" var="item">               
+                        <tr>
+                            <th scope="row">${item.orderNumber}</td>
+                            <td>${item.orderDate}</td>
+                            <td>${item.totalPrice}</td>
+                            <td>${item.shippingAddress}</td>                    
+                        </tr>
+                    </c:forEach>
+                  </tbody>
+                </table>
+            </div>
             <br>
         </section>
     </body>
