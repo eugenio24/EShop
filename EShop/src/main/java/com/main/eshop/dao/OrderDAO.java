@@ -4,11 +4,14 @@ package com.main.eshop.dao;
 import com.main.eshop.model.Brand;
 import com.main.eshop.model.OrderHead;
 import com.main.eshop.model.OrderRow;
+import com.main.eshop.model.User;
 import com.main.eshop.util.ConnectionManager;
 import com.main.eshop.util.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,6 +93,42 @@ public class OrderDAO {
             DBUtils.close(connection);
         }
 
+        return result;
+    }
+    
+    public static ArrayList<OrderHead> getListOrderHeads(User user){
+        String sqlQuery = "SELECT * FROM order_head WHERE idUser=?";
+        
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet resultSet = null;
+        
+        ArrayList<OrderHead> result = new ArrayList<>();
+        
+        try {
+            connection = ConnectionManager.getConnection();
+            stmt = connection.prepareStatement(sqlQuery);
+
+            stmt.setInt(1, user.getId());
+            
+            resultSet = stmt.executeQuery();
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("order_number");
+                Timestamp orderDate = resultSet.getTimestamp("order_date");
+                double totPrice = resultSet.getDouble("total_price");
+                String shippingAddress = resultSet.getString("shipping_address");
+                
+                result.add(new OrderHead(id, user, orderDate, totPrice, shippingAddress));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBUtils.close(resultSet);
+            DBUtils.close(stmt);
+            DBUtils.close(connection);
+        }
+        
         return result;
     }
 }
