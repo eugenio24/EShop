@@ -13,13 +13,13 @@ import java.sql.SQLException;
  */
 public class ConnectionManager {
     
-    public static final String URL = "jdbc:mysql://52.5.226.201:3306/sql9293590";
-    public static final String USER = "sql9293590";
-    public static final String PSW = "yuTgAcHKIf"; 
+//    public static final String URL = "jdbc:mysql://52.5.226.201:3306/sql9293590";
+//    public static final String USER = "sql9293590";
+//    public static final String PSW = "yuTgAcHKIf"; 
       
-//    public static final String URL = "jdbc:mysql://localhost:3306/eshop";
-//    public static final String USER = "root";
-//    public static final String PSW = ""; 
+    public static final String URL = "jdbc:mysql://localhost:3306/eshop";
+    public static final String USER = "root";
+    public static final String PSW = ""; 
         
     public static Connection getConnection() {
         Connection connection = null;
